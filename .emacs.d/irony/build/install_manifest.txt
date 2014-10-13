@@ -1,0 +1,1 @@
+/home/nathan/.emacs.d/irony/bin/irony-server
