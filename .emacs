@@ -16,6 +16,11 @@
 ;;; Start Helm globally
 (helm-mode 1)
 
+;;; hs-minor in C editing
+(add-hook 'c++-mode-hook 'hs-minor-mode)
+(add-hook 'c-mode-hook 'hs-minor-mode)
+(add-hook 'objc-mode-hook 'hs-minor-mode)
+
 ;;; Company mode in C editing
 (add-hook 'c++-mode-hook 'company-mode)
 (add-hook 'c-mode-hook 'company-mode)
