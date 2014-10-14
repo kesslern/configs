@@ -5,9 +5,7 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;;; MEPLA package manager
-;;; Install company-mode, irony-mode for auto completion
-;;; also, find-file-in-repository, magit
-;;; ido-vertical installed, dunno if it does anything
+;;; Will list all installed packages in future...
 (require 'package)
 (add-to-list 'package-archives
   '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
@@ -44,6 +42,7 @@
 (require 'ido)
 (ido-mode 1)
 (setq ido-separator "\n")
+(ido-vertical-mode 1)
 
 ;;; Color themes
 (add-to-list 'load-path "~/.emacs.d/lisp")
