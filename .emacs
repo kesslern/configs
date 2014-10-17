@@ -4,6 +4,7 @@
 ;;; GNU/emacs config file
 
 ;;; Code:
+
 ;;; On-the-fly syntax checking wherever possible
 (global-flycheck-mode 1)
 
@@ -31,6 +32,11 @@
 ;;; Start Helm globally. Better menus, must have.
 (helm-mode 1)
 
+;;; Enable flyspell
+(add-hook 'c++-mode-hook 'flyspell-mode)
+(add-hook 'c-mode-hook 'flyspell-mode)
+(add-hook 'objc-mode-hook 'flyspell-mode)
+
 ;;; hs-minor-mode in C editing. Allows hiding/showing blocks of code.
 (add-hook 'c++-mode-hook 'hs-minor-mode)
 (add-hook 'c-mode-hook 'hs-minor-mode)
@@ -56,11 +62,13 @@
     'irony-completion-at-point-async))
 (add-hook 'irony-mode-hook 'my-irony-mode-hook)
 
-;;; IDO mode, better buffer switching. Does this conflict with helm?
-;(require 'ido)
-;(ido-mode 1)
-;(setq ido-separator "\n")
-;(ido-vertical-mode 1)
+;;; IDO mode, better buffer switching. Use vertical mode too.
+;;; Helm replaces most of the places where ido-mode would
+;;; normally be used, but not all.
+(require 'ido)
+(ido-mode 1)
+(setq ido-separator "\n")
+(ido-vertical-mode 1)
 
 ;;; Color themes. These were installed manually, without MELPA.
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -72,3 +80,6 @@
 
 ;;; Disable menu bar at top of screen
 (menu-bar-mode -1)
+
+(provide '.emacs)
+;;; .emacs ends here
