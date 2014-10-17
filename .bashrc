@@ -6,5 +6,5 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-alias emacs='emacsclient'
+alias emacs='emacsclient -nw'
 PS1='[\u@\h \W]\$ '
