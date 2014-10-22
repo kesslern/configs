@@ -5,8 +5,6 @@
 
 ;;; Code:
 
-;;; ****General settings, no packages required:
-
 ;;; Kill current buffer immediately with C-x C-k.
 ;;; C-x k still prompts for which buffer to kill.
 (global-set-key (kbd "C-x C-k") 'kill-this-buffer)
@@ -45,21 +43,25 @@
 
 (use-package flycheck
 	:ensure flycheck)
+
 ;;; On-the-fly syntax checking wherever possible
-(global-flycheck-mode 1)
+;;; (disabled, was deleting code?)
+;(global-flycheck-mode 1)
 
 (use-package find-file-in-repository
 	:ensure find-file-in-repository)
-;;; ****Requires find-file-in-repository:
+
 ;;; Will default to normal find-file if not in a repo
+;;; Normal find-file with C-x f everywhere
 (global-set-key (kbd "C-x C-f") 'find-file-in-repository)
+(global-set-key (kbd "C-x f") 'find-file)
 
 ;;; Should look into more helm extensions
 (use-package helm
 	:ensure helm)
 (use-package helm-company
 	:ensure helm-company)
-;;; ****Requires helm:
+
 ;;; Start Helm globally. Better menus, must have.
 (helm-mode 1)
 
@@ -69,29 +71,11 @@
 
 (use-package company
 	:ensure company)
-;;; ****Requires company-mode:
-;;; Company mode in C editing. Required by irony-mode.
-(add-hook 'c++-mode-hook 'company-mode)
-(add-hook 'c-mode-hook 'company-mode)
-(add-hook 'objc-mode-hook 'company-mode)
 
-(use-package irony
-	:ensure irony)
-;;; **** Requires irony-mode:
-;;; Irony mode in C editing. Smart completion with clang.
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-
-;;; Irony-Mode install told me to put this here... try removing?
-;;; replace the `completion-at-point' and `complete-symbol' bindings in
-;;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;;; Company mode globally
+(global-company-mode)
+;;; Delay of 0.5s before menu shows
+(set 'company-idle-delay 0.5)
 
 (use-package ido-vertical-mode
 	:ensure ido-vertical-mode)
@@ -102,15 +86,30 @@
 (ido-vertical-mode 1)
 
 ;;; Install color themes from MELPA
+;;; requires package cl
 (use-package cl
-    :ensure cl)
+  :ensure cl)
 (use-package color-theme
-    :ensure color-theme)
+  :ensure color-theme)
 (color-theme-initialize)
-    
-;;; Install magit
+;;; billw color theme
+(color-theme-billw)
+
+;;; Install magit, git integration
 (use-package magit
-    :ensure magit)
+  :ensure magit)
+
+;;; Install malabar-mode, a better java mode
+;;; TODO: Make work...
+;; (use-package malabar-mode
+;;   :ensure malabar-mode)
+
+;; (require 'cedet)
+;; (require 'semantic)
+;; (load "semantic/loaddefs.el")
+;; (semantic-mode 1);;
+;; (require 'malabar-mode)
+;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))  
 
 (provide '.emacs)
 ;;; .emacs ends here
