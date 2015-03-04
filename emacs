@@ -111,5 +111,8 @@
 ;; (require 'malabar-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))  
 
+;; put backups in .saves
+(setq backup-directory-alist `(("." . "~/.saves")))
+
 (provide '.emacs)
 ;;; .emacs ends here
