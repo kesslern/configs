@@ -41,16 +41,15 @@
 
 (require 'use-package)
 
+;;; On the fly syntax checking with flycheck.
 (use-package flycheck
 	:ensure flycheck)
-
-;;; On-the-fly syntax checking wherever possible
-;;; (disabled, was deleting code?)
+;;; Uncomment to enable flycheck mode by default.
 ;(global-flycheck-mode 1)
 
+;;; Find files in svn/git repo
 (use-package find-file-in-repository
 	:ensure find-file-in-repository)
-
 ;;; Will default to normal find-file if not in a repo
 ;;; Normal find-file with C-x f everywhere
 (global-set-key (kbd "C-x C-f") 'find-file-in-repository)
@@ -66,22 +65,22 @@
 (helm-mode 1)
 
 ;;; Install flyspell but don't enable it by default
+;;; Enable for spell checking
 (use-package flyspell 
-	:ensure )
+	:ensure flyspell)
 
+;;; Complete anywhere
 (use-package company
 	:ensure company)
-
-;;; Company mode globally
 (global-company-mode)
-;;; Delay of 0.5s before menu shows
+;;; Delay of 0.5s before completion menu appears
 (set 'company-idle-delay 0.5)
 
-(use-package ido-vertical-mode
-	:ensure ido-vertical-mode)
 ;;; IDO mode, better buffer switching. Use vertical mode too.
 ;;; Helm replaces most of the places where ido-mode would
-;;; normally be used, but not all.
+;;; normally be used, but not all, so we still use it.
+(use-package ido-vertical-mode
+	:ensure ido-vertical-mode)
 (ido-mode 1)
 (ido-vertical-mode 1)
 
@@ -92,27 +91,33 @@
 (use-package color-theme
   :ensure color-theme)
 (color-theme-initialize)
-;;; billw color theme
-(color-theme-billw)
+;;; midnight color theme
+;;; billw is another good one
+(color-theme-midnight)
 
 ;;; Install magit, git integration
 (use-package magit
   :ensure magit)
 
-;;; Install malabar-mode, a better java mode
-;;; TODO: Make work...
-;; (use-package malabar-mode
-;;   :ensure malabar-mode)
+(use-package nyan-mode
+  :ensure nyan-mode)
+(nyan-mode 1)
 
-;; (require 'cedet)
-;; (require 'semantic)
-;; (load "semantic/loaddefs.el")
-;; (semantic-mode 1);;
-;; (require 'malabar-mode)
-;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))  
+(use-package ggtags
+  :ensure ggtags)			
 
-;; put backups in .saves
-(setq backup-directory-alist `(("." . "~/.saves")))
+;;; Save backup files to the system's temporary space
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;;; Hide tool bar by default
+(tool-bar-mode -1)
+;;; Highlight matching parenthesis
+(show-paren-mode 1)
+;;; 9 point font in the GUI
+(set-face-attribute 'default nil :height 90)
 
 (provide '.emacs)
 ;;; .emacs ends here
