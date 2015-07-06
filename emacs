@@ -54,8 +54,6 @@
 	:ensure auto-complete)
 (use-package auto-complete-clang
   :ensure auto-complete-clang)
-(use-package ido-vertical-mode
-  :ensure ido-vertical-mode)
 (use-package slime
   :ensure slime)
 (use-package ac-slime
@@ -82,8 +80,6 @@
 (helm-mode 1)
 (color-theme-initialize)
 (powerline-default-theme)
-(ido-mode 1)
-(ido-vertical-mode 1)
 (ac-config-default)
 (global-hungry-delete-mode)
 ;; elisp-slime-nav config
@@ -97,6 +93,9 @@
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
+(global-flycheck-mode)
+(global-set-key (kbd "C-c o") 'ff-find-other-file)
 
 ;;; Configuration of built-in emacs features
 
@@ -114,6 +113,7 @@
 (menu-bar-mode -1)
 ;; Highlight matching parenthesis
 (show-paren-mode 1)
+(setq scroll-error-top-bottom t)
 ;; hs-minor-mode in C editing. Allows hiding/showing blocks of code.
 (add-hook 'c++-mode-hook 'hs-minor-mode)
 (add-hook 'c-mode-hook 'hs-minor-mode)
