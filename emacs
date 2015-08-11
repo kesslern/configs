@@ -123,6 +123,8 @@
 (add-hook 'makefile-mode-hook
           (lambda ()
             (setq indent-tabs-mode t)))
+;; Automatic bracket completion
+(electric-pair-mode)
 
 (if window-system
 
