@@ -8,7 +8,7 @@
 ;; Ensure emacs can install packages, add melpa to repo list
 (require 'package)
 (add-to-list 'package-archives
-  '("melpa" . "http://melpa.org/packages/") t)
+	     '("melpa" . "http://melpa.org/packages/") t)
 ;; Install use-package if it isn't installed
 (package-initialize)
 (if (not (package-installed-p 'use-package))
@@ -22,57 +22,58 @@
 
 ;; Used by other packages
 (use-package popup
-  :ensure popup)
+    :ensure popup)
 (use-package yasnippet
-  :ensure yasnippet)
+    :ensure yasnippet)
 ;; Syntax checking
 (use-package flycheck
-  :ensure flycheck)
+    :ensure flycheck)
 ;; Find files in svn/git repo
 (use-package find-file-in-repository
-  :ensure find-file-in-repository)
+    :ensure find-file-in-repository)
 ;; Color themes, requires cl
 (use-package cl
-  :ensure cl)
+    :ensure cl)
 (use-package color-theme
-  :ensure color-theme)
+    :ensure color-theme)
 ;; Should look into more helm extensions
 (use-package helm
-	:ensure helm)
+    :ensure helm)
 (use-package helm-company
-  :ensure helm-company)
+    :ensure helm-company)
 ;; Magit, git integration
 (use-package magit
-  :ensure magit)
+    :ensure magit)
 ;; Nyan-cat in modebar
 (use-package nyan-mode
-  :ensure nyan-mode)
+    :ensure nyan-mode)
 ;; Spell checking
 (use-package flyspell
-	:ensure flyspell)
+    :ensure flyspell)
 (use-package auto-complete
-	:ensure auto-complete)
+    :ensure auto-complete)
 (use-package auto-complete-clang
-  :ensure auto-complete-clang)
+    :ensure auto-complete-clang)
 (use-package slime
-  :ensure slime)
+    :ensure slime)
 (use-package ac-slime
-  :ensure ac-slime)
+    :ensure ac-slime)
 (use-package elisp-slime-nav
-  :ensure elisp-slime-nav)
+    :ensure elisp-slime-nav)
 (use-package smooth-scrolling
-  :ensure smooth-scrolling)
+    :ensure smooth-scrolling)
 (use-package hungry-delete
-  :ensure hungry-delete)
+    :ensure hungry-delete)
 (use-package yascroll
-  :ensure yascroll)
+    :ensure yascroll)
 (use-package powerline
-  :ensure powerline)
+    :ensure powerline)
 (use-package rainbow-delimiters
-  :ensure rainbow-delimiters)
+    :ensure rainbow-delimiters)
 (use-package smartparens
-  :ensure smartparens)
-
+    :ensure smartparens)
+(use-package yaml-mode
+    :ensure yaml-mode)
 ;;; Configuration of packages
 
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
@@ -122,6 +123,8 @@
 (add-hook 'makefile-mode-hook
           (lambda ()
             (setq indent-tabs-mode t)))
+;; Automatic bracket completion
+(electric-pair-mode)
 
 (if window-system
 
@@ -130,11 +133,11 @@
       (set-face-attribute 'default nil :height 90)
       (nyan-mode 1))
 
-  (progn
-    ;; Options specific to CLI
-    (color-theme-billw)
-    (nyan-mode -1)
-    ))
+    (progn
+      ;; Options specific to CLI
+      (color-theme-billw)
+      (nyan-mode -1)
+      ))
 
 ;;; Keyboard shortcuts
 
