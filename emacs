@@ -8,7 +8,7 @@
 ;; Ensure emacs can install packages, add melpa to repo list
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/") t)
+  '("melpa" . "http://melpa.org/packages/") t)
 ;; Install use-package if it isn't installed
 (package-initialize)
 (if (not (package-installed-p 'use-package))
@@ -20,60 +20,71 @@
 
 ;;; Install packages
 
+(use-package yaml-mode
+  :ensure yaml-mode)
 ;; Used by other packages
 (use-package popup
-    :ensure popup)
+  :ensure popup)
 (use-package yasnippet
-    :ensure yasnippet)
+  :ensure yasnippet)
 ;; Syntax checking
 (use-package flycheck
-    :ensure flycheck)
+  :ensure flycheck)
 ;; Find files in svn/git repo
 (use-package find-file-in-repository
-    :ensure find-file-in-repository)
+  :ensure find-file-in-repository)
 ;; Color themes, requires cl
 (use-package cl
-    :ensure cl)
+  :ensure cl)
 (use-package color-theme
-    :ensure color-theme)
+  :ensure color-theme)
 ;; Should look into more helm extensions
 (use-package helm
-    :ensure helm)
+	:ensure helm)
 (use-package helm-company
-    :ensure helm-company)
+  :ensure helm-company)
 ;; Magit, git integration
 (use-package magit
-    :ensure magit)
+  :ensure magit)
 ;; Nyan-cat in modebar
 (use-package nyan-mode
-    :ensure nyan-mode)
+  :ensure nyan-mode)
 ;; Spell checking
 (use-package flyspell
-    :ensure flyspell)
+	:ensure flyspell)
 (use-package auto-complete
-    :ensure auto-complete)
+	:ensure auto-complete)
 (use-package auto-complete-clang
-    :ensure auto-complete-clang)
+  :ensure auto-complete-clang)
 (use-package slime
-    :ensure slime)
+  :ensure slime)
 (use-package ac-slime
-    :ensure ac-slime)
+  :ensure ac-slime)
 (use-package elisp-slime-nav
-    :ensure elisp-slime-nav)
+  :ensure elisp-slime-nav)
 (use-package smooth-scrolling
-    :ensure smooth-scrolling)
+  :ensure smooth-scrolling)
 (use-package hungry-delete
-    :ensure hungry-delete)
+  :ensure hungry-delete)
 (use-package yascroll
-    :ensure yascroll)
+  :ensure yascroll)
 (use-package powerline
-    :ensure powerline)
+  :ensure powerline)
 (use-package rainbow-delimiters
-    :ensure rainbow-delimiters)
+  :ensure rainbow-delimiters)
 (use-package smartparens
-    :ensure smartparens)
-(use-package yaml-mode
-    :ensure yaml-mode)
+  :ensure smartparens)
+(use-package projectile
+  :ensure projectile)
+(use-package rust-mode
+  :ensure rust-mode)
+(use-package flycheck-rust
+  :ensure flycheck-rust)
+
+
+;; (use-package helm-projectile
+;;   :ensure helm-projectile)
+
 ;;; Configuration of packages
 
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
@@ -88,17 +99,25 @@
   (add-hook hook 'elisp-slime-nav-mode))
 ;; Don't show magit setup instructions. Info here:
 ;; https://raw.githubusercontent.com/magit/magit/next/Documentation/RelNotes/1.4.0.txt
+(defvar magit-last-seen-setup-instructions)
 (setq magit-last-seen-setup-instructions "1.4.0")
+
+(defvar scheme-program-name)
+(setq scheme-program-name "scheme48")
+
 ;; ac-slime config, slime should be configured more probably
+;; I don't really know what this does...
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
+
+;; Use flycheck everywhere, and set c++ standard to c++11
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
 (global-flycheck-mode)
-(global-set-key (kbd "C-c o") 'ff-find-other-file)
 
-;;; Configuration of built-in emacs features
+;; Switch to other file (ex header file) with C-c o
+(global-set-key (kbd "C-c o") 'ff-find-other-file)
 
 ;; Set the theme
 (custom-set-variables
@@ -119,38 +138,44 @@
 (add-hook 'c++-mode-hook 'hs-minor-mode)
 (add-hook 'c-mode-hook 'hs-minor-mode)
 (add-hook 'objc-mode-hook 'hs-minor-mode)
-;;  Tab-indent makefiles
+;; Tab-indent makefiles
 (add-hook 'makefile-mode-hook
           (lambda ()
             (setq indent-tabs-mode t)))
-;; Automatic bracket completion
-(electric-pair-mode)
+;; 80 character lines in org-mode
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (auto-fill-mode 1)
+	    (set-fill-column 80)))
+;; Show pretty UTF-8 entities
+(defvar org-pretty-entities)
+(setq org-pretty-entities 1)
 
 (if window-system
 
     (progn
       ;; Options specific to GUI
-      (set-face-attribute 'default nil :height 90)
       (nyan-mode 1))
 
-    (progn
-      ;; Options specific to CLI
-      (color-theme-billw)
-      (nyan-mode -1)
-      ))
+  (progn
+    ;; Options specific to CLI
+    (nyan-mode -1)
+    ))
 
+(set-face-attribute 'default nil :height 90)
 ;;; Keyboard shortcuts
 
 ;; Kill current buffer immediately with C-x C-k.
 ;; C-x k still prompts for which buffer to kill.
 (global-set-key (kbd "C-x C-k") 'kill-this-buffer)
-;; Better buffer switching with C-x C-b (this is built in)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 ;; Use find-file-in-repository by default.
 ;; Will fall back to find-file when not in a repo.
 (global-set-key (kbd "C-x C-f") 'find-file-in-repository)
 ;; find-file with C-x f everywhere
 (global-set-key (kbd "C-x f") 'find-file)
+;; Helm-imenu provides jumping to areas of interest, implemented in each major mode
+(global-set-key (kbd "M-i") 'helm-imenu)
+
 ;; Set RET to newline-and-indent so the a newly created line
 ;; is automatically indented without pressing tab.
 (define-key global-map (kbd "RET") 'newline-and-indent)
