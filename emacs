@@ -56,12 +56,6 @@
 	:ensure auto-complete)
 (use-package auto-complete-clang
   :ensure auto-complete-clang)
-(use-package slime
-  :ensure slime)
-(use-package ac-slime
-  :ensure ac-slime)
-(use-package elisp-slime-nav
-  :ensure elisp-slime-nav)
 (use-package smooth-scrolling
   :ensure smooth-scrolling)
 (use-package hungry-delete
@@ -94,9 +88,6 @@
 (powerline-default-theme)
 (ac-config-default)
 (global-hungry-delete-mode)
-;; elisp-slime-nav config
-(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-  (add-hook hook 'elisp-slime-nav-mode))
 ;; Don't show magit setup instructions. Info here:
 ;; https://raw.githubusercontent.com/magit/magit/next/Documentation/RelNotes/1.4.0.txt
 (defvar magit-last-seen-setup-instructions)
@@ -104,13 +95,6 @@
 
 (defvar scheme-program-name)
 (setq scheme-program-name "scheme48")
-
-;; ac-slime config, slime should be configured more probably
-;; I don't really know what this does...
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
 
 ;; Use flycheck everywhere, and set c++ standard to c++11
 (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
