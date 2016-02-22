@@ -1,8 +1,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/home/nathan/.oh-my-zsh
+export TERM=xterm-256colors
 
 setopt hist_ignore_all_dups
-
 
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="agnoster"
@@ -34,11 +34,10 @@ plugins=(git sudo tmux common-aliases lein)
 
 ZSH_TMUX_AUTOSTART="true"
 ZSH_TMUX_AUTOCONNECT="true"
+ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="true"
+ZSH_TMUX_FIXTERM_WITH_256COLOR="true"
 
 source $ZSH/oh-my-zsh.sh
-
-[[ $TERM == "xterm" ]] && export TERM=xterm-256color
-[[ $TERM == "screen" ]] && export TERM=screen-256color
 
 alias emacs=emacsclient -nw
 alias nano=emacsclient -nw
