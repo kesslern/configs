@@ -2,8 +2,6 @@
 export ZSH=$HOME/.oh-my-zsh
 export TERM=xterm-256color
 
-setopt hist_ignore_all_dups
-
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="agnoster"
 
@@ -38,6 +36,11 @@ ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="true"
 ZSH_TMUX_FIXTERM_WITH_256COLOR="true"
 
 source $ZSH/oh-my-zsh.sh
+
+# Options should be set after sourcing oh-my-zsh.sh
+
+setopt hist_ignore_all_dups
+unsetopt share_history
 
 alias emacs=emacsclient -nw
 alias nano=emacsclient -nw
