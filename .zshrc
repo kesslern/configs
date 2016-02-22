@@ -1,6 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/home/nathan/.oh-my-zsh
-export TERM=xterm-256colors
+export TERM=xterm-256color
 
 setopt hist_ignore_all_dups
 
