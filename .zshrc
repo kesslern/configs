@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/nathan/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 export TERM=xterm-256color
 
 setopt hist_ignore_all_dups
@@ -45,4 +45,4 @@ alias e=emacsclient -nw
 alias gitl=git log --pretty=format:"%h - %an, %ar : %s"
 export EDITOR='emacsclient -nw'
 
-alias config='/usr/bin/git --git-dir=/home/nathan/.cfg/ --work-tree=/home/nathan'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
