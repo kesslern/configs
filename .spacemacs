@@ -29,6 +29,7 @@ values."
      clojure
      emacs-lisp
      git
+     javascript
      markdown
      org
      ;; (shell :variables
