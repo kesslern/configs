@@ -32,6 +32,10 @@ plugins=(git sudo tmux common-aliases lein)
 ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="true"
 ZSH_TMUX_FIXTERM_WITH_256COLOR="true"
 
+if [ "$TERM" = "xterm" ]; then
+    export TERM=xterm-256color
+fi
+
 source $ZSH/oh-my-zsh.sh
 
 # Options should be set after sourcing oh-my-zsh.sh
