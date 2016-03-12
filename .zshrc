@@ -1,6 +1,5 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-export TERM=xterm-256color
 
 # Look in ~/.oh-my-zsh/themes/
 ZSH_THEME="agnoster"
@@ -30,8 +29,6 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git sudo tmux common-aliases lein)
 
-ZSH_TMUX_AUTOSTART="true"
-ZSH_TMUX_AUTOCONNECT="true"
 ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="true"
 ZSH_TMUX_FIXTERM_WITH_256COLOR="true"
 
