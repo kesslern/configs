@@ -55,3 +55,5 @@ export SDKMAN_DIR="/Users/kesslern/.sdkman"
 [[ -s "/Users/kesslern/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kesslern/.sdkman/bin/sdkman-init.sh"
 
 eval $(thefuck --alias)
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
