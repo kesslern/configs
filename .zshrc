@@ -39,21 +39,12 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 # Options should be set after sourcing oh-my-zsh.sh
-
 setopt hist_ignore_all_dups
 unsetopt share_history
 
-alias emacs=emacsclient -nw
-alias nano=emacsclient -nw
-alias e=emacsclient -nw
-alias gitl=git log --pretty=format:"%h - %an, %ar : %s"
-export EDITOR='emacsclient -nw'
-
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-export SDKMAN_DIR="/Users/kesslern/.sdkman"
-[[ -s "/Users/kesslern/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/kesslern/.sdkman/bin/sdkman-init.sh"
-
 eval $(thefuck --alias)
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias gitl=git log --pretty=format:"%h - %an, %ar : %s"
+
+source $HOME/.bash_profile
