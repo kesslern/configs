@@ -1,3 +1,4 @@
+# Source the bash_profile if it exists
 if [ -f $HOME/.bash_profile ]; then
     source $HOME/.bash_profile
 fi
@@ -11,7 +12,7 @@ ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(sudo tmux common-aliases)
+plugins=(sudo tmux common-aliases archlinux history systemd)
 
 if [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
