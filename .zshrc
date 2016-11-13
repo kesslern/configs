@@ -11,7 +11,7 @@ ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(git sudo tmux common-aliases)
+plugins=(sudo tmux common-aliases)
 
 if [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
