@@ -39,3 +39,8 @@ alias gitl=git log --pretty=format:"%h - %an, %ar : %s"
 if command_exists thefuck; then
     eval $(thefuck --alias)
 fi
+
+# Use icdiff for diff where available
+if command_exists icdiff; then
+    alias diff=icdiff
+fi
