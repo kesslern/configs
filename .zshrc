@@ -25,10 +25,9 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
-setopt hist_ignore_all_dups
-unsetopt share_history
-
-eval $(thefuck --alias)
+setopt hist_ignore_all_dups # Ignore duplicate history options
+setopt hist_ignore_space    # Ignore commands that start with a space
+unsetopt share_history      # Prevent sharing history between active sessions
 
 # kesslern config settings
 # See https://github.com/kesslern/configs/blob/master/.README.md
@@ -45,10 +44,12 @@ if command_exists icdiff; then
     alias diff=icdiff
 fi
 
+# Add ~/.bin to the path if it exists
 if [ -d "$HOME/.bin" ]; then
     export PATH=$PATH:$HOME/.bin
 fi
 
+# Alias editor commands to emacs wrapper if available
 if command_exists ew; then
     alias nano=ew
     alias emacs=ew
