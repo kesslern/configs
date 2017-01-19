@@ -44,3 +44,13 @@ fi
 if command_exists icdiff; then
     alias diff=icdiff
 fi
+
+if [ -d "$HOME/.bin" ]; then
+    export PATH=$PATH:$HOME/.bin
+fi
+
+if command_exists ew; then
+    alias nano=ew
+    alias emacs=ew
+    export EDITOR=ew
+fi
