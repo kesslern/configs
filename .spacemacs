@@ -123,6 +123,13 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq scroll-error-top-bottom t)
   (setq ns-use-srgb-colorspace nil)
+
+  (setq helm-boring-buffer-regexp-list
+        '("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf"))
+
+  (global-set-key (kbd "C-x C-b") 'helm-mini)
+  (global-set-key (kbd "C-x b")   'helm-mini)
+
   '(version-control :variables
                     version-control-global-margin t)
   )
