@@ -1,11 +1,11 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-    if pgrep emacs; then
+    if pgrep -i emacs; then
         DISPLAY= emacsclient -c
     else
         nano
     fi
 else 
-    pgrep emacs && emacsclient "$@" || nano "$@"
+    pgrep -i emacs && emacsclient "$@" || nano "$@"
 fi
