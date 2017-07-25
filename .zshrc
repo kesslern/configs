@@ -21,6 +21,9 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 # Options should be set after sourcing oh-my-zsh.sh
+eval `dircolors $HOME/.dircolors`
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
 command_exists () {
     type "$1" &> /dev/null ;
 }
