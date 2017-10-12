@@ -21,8 +21,6 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 # Options should be set after sourcing oh-my-zsh.sh
-eval `dircolors $HOME/.dircolors`
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 command_exists () {
     type "$1" &> /dev/null ;
@@ -31,6 +29,15 @@ command_exists () {
 setopt hist_ignore_all_dups # Ignore duplicate history options
 setopt hist_ignore_space    # Ignore commands that start with a space
 unsetopt share_history      # Prevent sharing history between active sessions
+
+# Dircolors settings
+if command_exists dircolors; then
+    eval `dircolors $HOME/.dircolors`
+elif command_exists gdircolors; then
+    eval `gdircolors $HOME/.dircolors`
+fi
+
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # kesslern config settings
 # See https://github.com/kesslern/configs/blob/master/.README.md
