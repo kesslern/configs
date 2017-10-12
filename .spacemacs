@@ -134,7 +134,8 @@ you should place your code here."
 
   '(version-control :variables
                     version-control-global-margin t)
-
+  (global-set-key [mouse-4] 'scroll-down-line)
+  (global-set-key [mouse-5] 'scroll-up-line)
   (osx-clipboard-mode +1)
   )
 
