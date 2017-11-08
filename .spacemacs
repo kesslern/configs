@@ -137,6 +137,7 @@ you should place your code here."
   (global-set-key [mouse-4] 'scroll-down-line)
   (global-set-key [mouse-5] 'scroll-up-line)
   (osx-clipboard-mode +1)
+  (setq create-lockfiles nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
