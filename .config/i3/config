@@ -2,29 +2,26 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-# Autorun commands
-exec --no-startup-id feh --bg-scale .wallpaper.jpg
-exec --no-startup-id setxkbmap -layout dvorak
-exec --no-startup-id compton
-exec --no-startup-id nm-applet
+# Run when restarting i3
+exec_always --no-startup-id compton
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id feh --bg-scale .wallpaper.jpg
 
+# Run once on startup:
+exec --no-startup-id setxkbmap -layout dvorak
+exec --no-startup-id bash -c "[ -e $HOME/.Xmodmap ] && xmodmap $HOME/.Xmodmap"
+exec --no-startup-id bash -c "[ -e $HOME/.bin/i3-custom-startup.sh ] && bash $HOME/.bin/i3-custom-startup.sh"
+
+# Backlight control
+bindsym XF86KbdBrightnessUp exec kb-light.py +
+bindsym XF86KbdBrightnessDown exec kb-light.py -
+
+# Use Windows key for modifier
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
