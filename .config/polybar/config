@@ -12,14 +12,14 @@ cyan = #89ddff
 
 [bar/master]
 width = 100%
-height = 24
+height = 32
 separator = " "
 background = ${colors.background}
 foreground = ${colors.foreground}
 underline-size = 0
 overline-size = 0
-font-0 = "DejaVu Sans Mono:pixelsize=9:antialias=false;1"
-font-1 = "FontAwesome:pixelsize=9:antialias=false;1"
+font-0 = "DejaVu Sans Mono:pixelsize=16:antialias=false;1"
+font-1 = "FontAwesome:pixelsize=16:antialias=false;1"
 
 [bar/top]
 inherit = bar/master
