@@ -7,6 +7,7 @@ exec --no-startup-id feh --bg-scale .wallpaper.jpg
 exec --no-startup-id setxkbmap -layout dvorak
 exec --no-startup-id compton
 exec --no-startup-id nm-applet
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 set $mod Mod4
 
@@ -154,12 +155,6 @@ bindsym $mod+Shift+g gaps outer current minus 6
 bindsym $mod+Shift+c gaps outer current plus 6
 
 for_window [class="^.*"] border pixel 4
-
-bar {
-    i3bar_command i3bar
-    status_command i3status
-    position top
-}
 
 # Inactive border color
 set $bg-color            #0A4CA6
