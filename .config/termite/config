@@ -4,7 +4,7 @@
 foreground = #839496
 foreground_bold = #eee8d5
 #foreground_dim = #888888
-background = rgba(0, 43, 54)
+background = rgb(0, 43, 54)
 cursor = #93a1a1
 
 # if unset, will reverse foreground and background
@@ -29,4 +29,4 @@ color14 = #93a1a1
 color15 = #fdf6e3
 
 [options]
-font = Ubuntu Mono 19
+font = Ubuntu Mono 12
