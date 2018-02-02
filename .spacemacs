@@ -44,6 +44,7 @@ values."
      haskell
      helm
      html
+     javascript
      markdown
      org
      react
