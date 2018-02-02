@@ -8,8 +8,6 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id feh --bg-scale .wallpaper.jpg
 
 # Run once on startup:
-exec --no-startup-id setxkbmap -layout dvorak
-exec --no-startup-id bash -c "[ -e $HOME/.Xmodmap ] && xmodmap $HOME/.Xmodmap"
 exec --no-startup-id bash -c "[ -e $HOME/.bin/i3-custom-startup.sh ] && bash $HOME/.bin/i3-custom-startup.sh"
 
 # Backlight control
