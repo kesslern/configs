@@ -1,0 +1,4 @@
+# Hi-dpi settings
+TERMITE_FONT=Ubuntu Mono 19
+POLYBAR_HEIGHT=32
+POLYBAR_FONT_SIZE=16

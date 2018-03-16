@@ -1,2 +1,4 @@
 # Default rules
-# Empty for now
+TERMITE_FONT=Ubuntu Mono 12
+POLYBAR_HEIGHT=24
+POLYBAR_FONT_SIZE=9

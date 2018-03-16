@@ -12,16 +12,16 @@ cyan = #89ddff
 
 [bar/master]
 width = 100%
-height = 24
+height = POLYBAR_HEIGHT
 separator = " "
 background = ${colors.background}
 foreground = ${colors.foreground}
 underline-size = 0
 overline-size = 0
-font-0 = "DejaVu Sans Mono:pixelsize=9:antialias=false;1"
-font-1 = "FontAwesome:pixelsize=9:antialias=false;1"
-font-2 = "unifont:fontformat=truetype:size=9:antialias=false;0"
-font-3 = "Symbola:size=9:style=Regular"
+font-0 = "DejaVu Sans Mono:pixelsize=POLYBAR_FONT_SIZE:antialias=false;1"
+font-1 = "FontAwesome:pixelsize=POLYBAR_FONT_SIZE:antialias=false;1"
+font-2 = "unifont:fontformat=truetype:size=POLYBAR_FONT_SIZE:antialias=false;0"
+font-3 = "Symbola:size=POLYBAR_FONT_SIZE:style=Regular"
 
 [bar/top]
 inherit = bar/master
