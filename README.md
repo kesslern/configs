@@ -28,14 +28,15 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ```
 
-### Install the dotfiles
-Clone the bare repository into `~/.cfg`, ignore untracked files, and checkout the dotfiles:
+### Generate the dotfiles
+Clone the repository and use dot-templater to template the files:
 ```
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-git clone --bare https://github.com/kesslern/configs.git $HOME/.cfg
-config config --local status.showUntrackedFiles no
-config checkout
+git clone https://github.com/kesslern/configs.git
+cd configs/
+dot-templater default dotfiles out
 ```
+
+Copy the files in `out/` to your home directory or use a utility like GNU Stow to create symlinks.
 
 ## License
 
