@@ -18,25 +18,28 @@
 
 ### oh-my-zsh
 [Full documentation here.](https://github.com/robbyrussell/oh-my-zsh)
-```
+```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
 ### Spacemacs
 [Full documentation here.](https://github.com/syl20bnr/spacemacs)
-```
+```bash
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 ```
 
 ### Generate the dotfiles
-Clone the repository and use dot-templater to template the files:
-```
+Dotfiles are generated using [dot-templater](https://github.com/kesslern/dot-templater).
+
+Clone the repository and use dot-templater to template the files. Although dot-templater could place the dotfiles directly into your home directory, it is recommended to place them into a hidden subdirectory and use GNU Stow to link the dotfiles into the home directory.
+```bash
 git clone https://github.com/kesslern/configs.git
 cd configs/
-dot-templater default dotfiles out
+mkdir ~/.dotfiles
+dot-templater [TEMPLATE] dotfiles ~/.dotfiles
+cd ~/.dotfiles
+stow .
 ```
-
-Copy the files in `out/` to your home directory or use a utility like GNU Stow to create symlinks.
 
 ## License
 
