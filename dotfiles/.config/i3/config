@@ -5,7 +5,7 @@
 # Run when restarting i3
 exec_always --no-startup-id compton
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id feh --bg-scale .wallpaper.jpg
+exec_always --no-startup-id [ -f $HOME/.wallpaper ] && feh --bg-scale $HOME/.wallpaper.jpg
 
 # Run once on startup:
 exec --no-startup-id bash -c "[ -e $HOME/.bin/i3-custom-startup.sh ] && bash $HOME/.bin/i3-custom-startup.sh"
