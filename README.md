@@ -37,8 +37,7 @@ git clone https://github.com/kesslern/configs.git
 cd configs/
 mkdir ~/.dotfiles
 dot-templater [TEMPLATE] dotfiles ~/.dotfiles
-cd ~/.dotfiles
-stow .
+stow -t ~ -d dotfiles ~/.dotfiles .
 ```
 
 ## License
