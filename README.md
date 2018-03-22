@@ -35,9 +35,7 @@ Clone the repository and use dot-templater to template the files. Although dot-t
 ```bash
 git clone https://github.com/kesslern/configs.git
 cd configs/
-mkdir ~/.dotfiles
-dot-templater [TEMPLATE] dotfiles ~/.dotfiles
-stow -t ~ -d ~/.dotfiles .
+./apply.sh [TEMPLATE]
 ```
 
 ## License
