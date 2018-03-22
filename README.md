@@ -6,8 +6,8 @@
 + emacs 24+
 + tmux
 + if using i3:
-  + i3
-  + polybar
+  + i3-gaps
+  + xfce4-panel
   + feh
   + compton
 + if using `kb-light.py` to change keyboard backlight:

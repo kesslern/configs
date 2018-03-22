@@ -4,11 +4,8 @@
 
 # Run when restarting i3
 exec_always --no-startup-id compton
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id xfce4-panel
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-scale $HOME/.wallpaper.jpg
-
-# Run once on startup:
-exec --no-startup-id bash -c "[ -e $HOME/.bin/i3-custom-startup.sh ] && bash $HOME/.bin/i3-custom-startup.sh"
 
 # Backlight control
 bindsym XF86KbdBrightnessUp exec kb-light.py +
