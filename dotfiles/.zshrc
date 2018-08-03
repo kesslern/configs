@@ -3,7 +3,7 @@ if [ -f $HOME/.bash_profile ]; then
     source $HOME/.bash_profile
 fi
 
-# Path to your oh-my-zsh installation.
+# Path to oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
 # Look in ~/.oh-my-zsh/themes/
@@ -30,6 +30,9 @@ setopt hist_ignore_all_dups # Ignore duplicate history options
 setopt hist_ignore_space    # Ignore commands that start with a space
 unsetopt share_history      # Prevent sharing history between active sessions
 
+# Increase zsh history length
+export SAVEHIST=50000
+
 # Dircolors settings
 if command_exists dircolors; then
     eval `dircolors $HOME/.dircolors`
@@ -38,11 +41,6 @@ elif command_exists gdircolors; then
 fi
 
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-# kesslern config settings
-# See https://github.com/kesslern/configs/blob/master/.README.md
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-alias gitl=git log --pretty=format:"%h - %an, %ar : %s"
 
 # Initiate 'thefuck'
 if command_exists thefuck; then
@@ -65,3 +63,7 @@ if command_exists ew; then
     alias emacs=ew
     export EDITOR=ew
 fi
+
+# Aliases to format pretty-print JSON and XML
+alias -g JSON='| python -m json.tool'
+alias -g XML='| xmllint --format -'
