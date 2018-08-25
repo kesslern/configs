@@ -67,3 +67,15 @@ fi
 # Aliases to format pretty-print JSON and XML
 alias -g JSON='| python -m json.tool'
 alias -g XML='| xmllint --format -'
+
+# Copy and paste
+if command_exists xclip; then
+    COPY='xclip -selection clipboard'
+    PASTE='xclip -selection clipboard -o'
+else
+    COPY='pbcopy'
+    PASTE='pbpaste'
+fi
+
+alias -g paste="$PASTE"
+alias -g copy="$COPY"
