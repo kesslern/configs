@@ -77,5 +77,10 @@ else
     PASTE='pbpaste'
 fi
 
+if command_exists lesspipe.sh; then
+    export LESSOPEN="|lesspipe.sh %s"
+fi
+
+
 alias -g paste="$PASTE"
 alias -g copy="$COPY"

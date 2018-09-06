@@ -13,6 +13,12 @@
 + if using `kb-light.py` to change keyboard backlight:
   + python3
   + upower
++ for formatting JSON, python3
++ for formattting XML, xmllint
++ optional:
+  + lesspipe
+  + thefuck
+  + xclip or pbcopy/pbpaste
 
 ## Setup
 
