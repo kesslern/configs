@@ -12,7 +12,7 @@ ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(sudo tmux common-aliases archlinux history systemd)
+plugins=(sudo tmux common-aliases archlinux history systemd gitfast dirhistory yarn)
 
 if [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
