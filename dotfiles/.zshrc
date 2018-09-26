@@ -77,10 +77,13 @@ else
     PASTE='pbpaste'
 fi
 
+alias -g paste="$PASTE"
+alias -g copy="$COPY"
+
 if command_exists lesspipe.sh; then
     export LESSOPEN="|lesspipe.sh %s"
 fi
 
-
-alias -g paste="$PASTE"
-alias -g copy="$COPY"
+if ! command_exists open; then
+   alias open="xdg-open"
+fi
