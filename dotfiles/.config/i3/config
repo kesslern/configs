@@ -176,3 +176,7 @@ bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+
+# Make IntelliJ focus properly on window/desktop change
+for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
+for_window [class="^jetbrains-.+"][window_type=dialog] focus
