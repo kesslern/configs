@@ -6,6 +6,7 @@
 exec_always --no-startup-id compton
 exec_always --no-startup-id xfce4-panel
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-scale $HOME/.wallpaper.jpg
+exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
 
 # Backlight control
 bindsym XF86KbdBrightnessUp exec kb-light.py +
