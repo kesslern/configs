@@ -139,8 +139,8 @@ mode "resize" {
 bindsym $mod+p mode "resize"
 
 # i3-gaps configuration
-gaps inner 6
-smart_borders no_gaps
+#gaps inner 6
+#smart_borders no_gaps
 
 bindsym $mod+g       gaps inner current minus 6
 bindsym $mod+c       gaps inner current plus 6
