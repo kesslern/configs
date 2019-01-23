@@ -4,7 +4,7 @@
 
 # Run when restarting i3
 exec_always --no-startup-id compton
-exec_always --no-startup-id xfce4-panel
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-scale $HOME/.wallpaper.jpg
 exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
 
@@ -150,22 +150,30 @@ bindsym $mod+Shift+c gaps outer current plus 6
 for_window [class="^.*"] border pixel 4
 
 # Inactive border color
-set $bg-color            #0A4CA6
+
+set $light-blue          #ADD7F6
+set $sky-blue            #87BFFF
+set $azure               #3F8EFC
+set $cerulean            #007EA7
+set $dark-blue       #003249
+
+set $bg-color            #003249
 
 # Active border color
-set $bd-color            #9DE2FF
+set $bd-color            #2667FF
 
-set $unused              #00FF00
+set $unused              #87BFFF
 set $inactive-bg-color   $unused
 set $inactive-bd-color   $unused
-set $text-color          $unused
+set $text-color          #ADD7F6
 set $inactive-text-color $unused
-#                           border          background      text                 indicator  child border 
-client.focused              $bd-color       $bg-color       $text-color          $bd-color  $bd-color  
-client.unfocused            $bg-color       $bg-color       $inactive-text-color $bg-color  $bg-color
-client.focused_inactive     $bg-color       $bg-color       $inactive-text-color $bg-color  $bg-color
-client.urgent               $bg-color       $bg-color       $text-color          $bg-color  $bg-color
-client.background                           $bg-color
+
+#                           border          background      text             indicator   child border
+client.focused              $azure          $azure          $dark-blue       $light-blue $azure
+client.unfocused            $dark-blue      $dark-blue      $sky-blue        $light-blue $dark-blue
+client.focused_inactive     $dark-blue      $cerulean       $sky-blue        $light-blue $dark-blue
+client.urgent               $dark-blue      $sky-blue       $sky-blue        $light-blue $dark-blue
+client.background                           $sky-blue
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% # increase sound volume

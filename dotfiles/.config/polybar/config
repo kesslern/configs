@@ -1,0 +1,81 @@
+[colors]
+background = #ee292d3e
+foreground = #bfc7d5
+yellow = #ffcb6b
+black = #073642
+white = #bfc7d5
+red = #ac4142
+green = #a9c77d
+blue = #82aaff
+magenta = #c792ea
+cyan = #89ddff
+
+[bar/bar]
+width = 100%
+height = 32
+separator = " "
+background = ${colors.background}
+foreground = ${colors.foreground}
+underline-size = 0
+overline-size = 0
+font-0 = "DejaVu Sans Mono:pixelsize=16:antialias=false;1"
+font-1 = "FontAwesome:pixelsize=16:antialias=false;1"
+font-2 = "unifont:fontformat=truetype:size=16:antialias=false;0"
+font-3 = "Symbola:size=16:style=Regular"
+
+modules-left = workspaces
+modules-center = title
+modules-right = network battery volume time
+
+padding-right = 2
+module-margin = 1
+
+[module/volume]
+type = internal/pulseaudio
+format-volume-foreground = ${colors.yellow}
+format-volume = <ramp-volume> <label-volume>
+
+label-muted = 🔇
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+
+[module/title]
+type = internal/xwindow
+label = %title%
+label-maxlen = 75
+
+[module/battery]
+type = internal/battery
+
+label-charging = 🔋 %percentage%%
+label-discharging = 🔋 %percentage%%
+label-full = 🔋 %percentage% 
+
+; Use: $ ls -1 /sys/class/power_supply/
+battery = BAT0
+eadapter = AC0
+
+[module/workspaces]
+type = internal/i3
+enable-click = true
+enable-scroll = true
+strip-wsnumbers = true
+
+format-padding = 1
+label-focused-foreground = ${colors.magenta}
+label-focused-padding = 1
+
+label-unfocused-padding = 1
+label-visible-padding = 1
+
+label-urgent-foreground = ${colors.red}
+label-urgent-padding = 1
+
+[module/time]
+type = internal/date
+interval = 40
+
+label-foreground = ${colors.magenta}
+
+date = "%I:%M %p"
