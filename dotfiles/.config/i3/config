@@ -92,6 +92,8 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+bindsym $mod+g workspace prev
+bindsym $mod+c workspace next
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -137,17 +139,6 @@ mode "resize" {
 }
 
 bindsym $mod+p mode "resize"
-
-# i3-gaps configuration
-#gaps inner 6
-#smart_borders no_gaps
-
-bindsym $mod+g       gaps inner current minus 6
-bindsym $mod+c       gaps inner current plus 6
-bindsym $mod+Shift+g gaps outer current minus 6
-bindsym $mod+Shift+c gaps outer current plus 6
-
-for_window [class="^.*"] border pixel 4
 
 # Inactive border color
 
