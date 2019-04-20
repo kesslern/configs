@@ -10,6 +10,9 @@
   + xfce4-panel
   + feh
   + compton
+  + polybar
+  + noto color emoji
+  + pulseaudio
 + if using `kb-light.py` to change keyboard backlight:
   + python3
   + upower

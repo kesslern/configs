@@ -12,23 +12,18 @@ cyan = #89ddff
 
 [bar/bar]
 width = 100%
-height = 32
+height = POLYBAR_HEIGHT
 separator = " "
 background = ${colors.background}
 foreground = ${colors.foreground}
 underline-size = 0
 overline-size = 0
-font-0 = "DejaVu Sans Mono:pixelsize=16:antialias=false;1"
-font-1 = "FontAwesome:pixelsize=16:antialias=false;1"
-font-2 = "unifont:fontformat=truetype:size=16:antialias=false;0"
-font-3 = "Symbola:size=16:style=Regular"
+font-0 = "DejaVu Sans Mono:pixelsize=POLYBAR_FONT_SIZE:antialias=false;1"
+font-1 = "NotoEmoji:scale=POLYBAR_FONT_SCALE;"
 
 modules-left = workspaces
 modules-center = title
-modules-right = network battery volume time
-
-padding-right = 2
-module-margin = 1
+modules-right = battery volume time
 
 [module/volume]
 type = internal/pulseaudio
