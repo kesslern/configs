@@ -42,8 +42,13 @@
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 
-(use-package hungry-delete)
-(global-hungry-delete-mode)
+(use-package smart-hungry-delete
+  :ensure t
+  :bind (("DEL" . smart-hungry-delete-backward-char)
+		 ("C-d" . smart-hungry-delete-forward-char))
+  :defer nil ;; dont defer so we can add our functions to hooks 
+  :config (smart-hungry-delete-add-default-hooks)
+  )
 
 ;;; Custom configuration
 (menu-bar-mode -1)
@@ -121,7 +126,7 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (which-key multiple-cursors hungry-delete powerline smart-mode-line htmlize use-package solarized-theme osx-clipboard helm))))
+    (which-key powerline smart-mode-line htmlize use-package solarized-theme osx-clipboard helm))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
