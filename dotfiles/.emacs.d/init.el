@@ -30,6 +30,9 @@
 (use-package powerline)
 (powerline-default-theme)
 
+(use-package which-key)
+(which-key-mode)
+
 (use-package helm)
 (helm-mode 1)
 (helm-autoresize-mode t)
@@ -118,7 +121,7 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (hungry-delete powerline smart-mode-line htmlize use-package solarized-theme osx-clipboard helm))))
+    (which-key multiple-cursors hungry-delete powerline smart-mode-line htmlize use-package solarized-theme osx-clipboard helm))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
