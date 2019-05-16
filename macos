@@ -1,3 +1,6 @@
 # Default rules
 TERMITE_FONT=Source Code Pro for Powerline 12
 KITTY_FONT_SIZE=12
+
+CUSTOM_EMACS_TERM
+EMACS_TERM=xterm-24bit

@@ -31,12 +31,6 @@
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-### Spacemacs
-[Full documentation here.](https://github.com/syl20bnr/spacemacs)
-```bash
-git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-```
-
 ### Generate the dotfiles
 Dotfiles are generated using [dot-templater](https://github.com/kesslern/dot-templater).
 
@@ -51,7 +45,7 @@ cd configs/
 
 MIT
 
-Copyright (c) 2017 Nathan Kessler
+Copyright (c) 2019 Nathan Kessler
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

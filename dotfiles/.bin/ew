@@ -1,5 +1,9 @@
 #!/bin/bash
 
+### CUSTOM_EMACS_TERM
+export TERM=EMACS_TERM
+### CUSTOM_EMACS_TERM
+
 if [ $# -eq 0 ]; then
     if pgrep -i emacs; then
         DISPLAY= emacsclient -c
