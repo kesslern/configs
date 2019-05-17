@@ -31,6 +31,12 @@
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
+### Tmux Plugin Manager
+[Full documentation here.](https://github.com/tmux-plugins/tpm)
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
 ### Generate the dotfiles
 Dotfiles are generated using [dot-templater](https://github.com/kesslern/dot-templater).
 
