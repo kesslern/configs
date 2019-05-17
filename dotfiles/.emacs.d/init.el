@@ -11,11 +11,16 @@
 (setq use-package-always-ensure t)
 
 ;;; Add & Configure Packages
+(use-package arduino-mode)
 (use-package markdown-mode)
 (use-package groovy-mode)
 (use-package kotlin-mode)
 (use-package meghanada)
 (use-package company)
+(use-package company-arduino)
+(use-package company-c-headers)
+(use-package company-shell)
+
 (use-package org)
 
 (use-package js2-mode)
@@ -28,8 +33,8 @@
 (use-package solarized-theme)
 (load-theme 'solarized-dark t)
 
-(use-package powerline)
-(powerline-default-theme)
+(use-package telephone-line)
+(telephone-line-mode 1)
 
 (use-package which-key)
 (which-key-mode)
@@ -132,10 +137,12 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (which-key powerline smart-mode-line htmlize use-package solarized-theme osx-clipboard helm))))
+    (auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme osx-clipboard js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-block-begin-line ((t (:inherit org-meta-line :underline nil)))))
+ '(mode-line ((t (:background "gray18" :foreground "#839496" :box (:line-width 1 :color "#073642" :style unspecified) :overline "#073642" :underline "#284b54"))))
+ '(org-block-begin-line ((t (:inherit org-meta-line :underline nil))))
+ '(telephone-line-accent-active ((t (:inherit mode-line :background "darkslateblue" :foreground "white")))))
