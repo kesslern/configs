@@ -14,7 +14,7 @@
 (use-package markdown-mode)
 (use-package groovy-mode)
 (use-package kotlin-mode)
-(use-package meghanada-mode)
+(use-package meghanada)
 (use-package company)
 (use-package org)
 
@@ -81,7 +81,7 @@
       `((".*" ,temporary-file-directory t)))
 
 ;;; Add folder names if buffer names are identical
- 'uniquify)
+(require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
 ;;; Scroll with mouse
@@ -107,7 +107,6 @@
   (setq-local sh-indentation n))
 
 (defun my-personal-code-style ()
-  (interactive)
   ;; use space instead of tab
   (setq indent-tabs-mode nil)
   ;; indent 2 spaces width
