@@ -23,6 +23,9 @@
 
 (use-package org)
 
+(use-package hl-todo)
+(global-hl-todo-mode)
+
 (use-package js2-mode)
 (setq js2-strict-missing-semi-warning nil)
 (setq js2-missing-semi-one-line-override t)
@@ -137,7 +140,7 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme osx-clipboard js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
+    (hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme osx-clipboard js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
