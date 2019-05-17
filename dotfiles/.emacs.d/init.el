@@ -7,19 +7,16 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-
 ;;; Add & Configure Packages
 (use-package markdown-mode)
+(use-package org)
 
 (use-package js2-mode)
 (setq js2-strict-missing-semi-warning nil)
 (setq js2-missing-semi-one-line-override t)
-
-(use-package org)
 
 (use-package osx-clipboard)
 (osx-clipboard-mode +1)
@@ -49,6 +46,13 @@
   :defer nil ;; dont defer so we can add our functions to hooks 
   :config (smart-hungry-delete-add-default-hooks)
   )
+
+(use-package auto-package-update
+   :ensure t
+   :config
+   (setq auto-package-update-delete-old-versions t
+         auto-package-update-interval 4)
+   (auto-package-update-maybe))
 
 ;;; Custom configuration
 (menu-bar-mode -1)
