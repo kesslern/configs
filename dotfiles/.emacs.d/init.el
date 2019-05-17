@@ -12,6 +12,10 @@
 
 ;;; Add & Configure Packages
 (use-package markdown-mode)
+(use-package groovy-mode)
+(use-package kotlin-mode)
+(use-package meghanada-mode)
+(use-package company)
 (use-package org)
 
 (use-package js2-mode)
@@ -31,6 +35,9 @@
 (which-key-mode)
 
 (use-package helm)
+(set-face-attribute 'helm-selection nil 
+                    :background "purple"
+                    :foreground "black")
 (helm-mode 1)
 (helm-autoresize-mode t)
 (setq helm-boring-buffer-regexp-list
@@ -74,7 +81,7 @@
       `((".*" ,temporary-file-directory t)))
 
 ;;; Add folder names if buffer names are identical
-(require 'uniquify)
+ 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
 ;;; Scroll with mouse
@@ -115,10 +122,6 @@
 (add-hook 'sh-mode-hook 'my-personal-code-style)
 (add-hook 'js-mode-hook 'my-personal-code-style)
 
-(set-face-attribute 'helm-selection nil 
-                    :background "purple"
-                    :foreground "black")
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -136,5 +139,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(header-line ((t (:background "brightcyan" :foreground "black" :inverse-video t))))
  '(org-block-begin-line ((t (:inherit org-meta-line :underline nil)))))
