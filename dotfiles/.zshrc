@@ -12,7 +12,19 @@ ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(sudo tmux common-aliases archlinux history systemd gitfast dirhistory yarn)
+plugins=(
+        sudo
+        common-aliases
+        archlinux
+        history
+        systemd
+        gitfast
+        dirhistory
+        yarn
+        httpie
+        gradle
+        docker
+)
 
 if [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
