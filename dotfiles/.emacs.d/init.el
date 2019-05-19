@@ -68,8 +68,9 @@
          auto-package-update-interval 4)
    (auto-package-update-maybe))
 
-;;; Custom configuration
+;;; Customize built-in modes and settings
 (menu-bar-mode -1)
+(tool-bar-mode -1)
 (xterm-mouse-mode 1)
 (show-paren-mode 1)
 (save-place-mode 1)
@@ -96,6 +97,7 @@
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
 
+;;; Use 2 space indents for most languages
 (defun my-setup-indent (n)
   (setq-local standard-indent n)
   (setq-local c-basic-offset n)
@@ -139,7 +141,7 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme osx-clipboard js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
+    (xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
