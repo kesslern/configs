@@ -20,7 +20,6 @@
 (use-package company-arduino)
 (use-package company-c-headers)
 (use-package company-shell)
-
 (use-package org)
 
 (use-package hl-todo)
@@ -30,8 +29,8 @@
 (setq js2-strict-missing-semi-warning nil)
 (setq js2-missing-semi-one-line-override t)
 
-(use-package osx-clipboard)
-(osx-clipboard-mode +1)
+(use-package xclip)
+(xclip-mode +1)
 
 (use-package solarized-theme)
 (load-theme 'solarized-dark t)
@@ -140,13 +139,14 @@
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme osx-clipboard js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
+    (xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme osx-clipboard js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:background "gray18" :foreground "#839496" :box (:line-width 1 :color "#073642" :style unspecified) :overline "#073642" :underline nil))))
+ '(mode-line-inactive ((t (:background "gray20" :foreground "#586e75" :box (:line-width 1 :color "#002b36" :style unspecified) :overline "#073642" :underline nil))))
  '(org-block-begin-line ((t (:inherit org-meta-line :underline nil))))
  '(telephone-line-accent-active ((t (:inherit mode-line :background "darkslateblue" :foreground "white" :underline nil))))
  '(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background "grey11" :foreground "gray40")))))
