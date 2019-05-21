@@ -12,15 +12,16 @@
 
 ;;; Add & Configure Packages
 (use-package arduino-mode)
-(use-package markdown-mode)
-(use-package groovy-mode)
-(use-package kotlin-mode)
-(use-package meghanada)
 (use-package company)
 (use-package company-arduino)
 (use-package company-c-headers)
 (use-package company-shell)
+(use-package groovy-mode)
+(use-package kotlin-mode)
+(use-package markdown-mode)
+(use-package meghanada)
 (use-package org)
+(use-package restclient)
 
 (use-package hl-todo)
 (global-hl-todo-mode)
