@@ -42,6 +42,19 @@
 (use-package which-key)
 (which-key-mode)
 
+(use-package rust-mode)
+(setq rust-format-on-save t)
+
+(use-package cargo)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+(use-package lsp-mode)
+(add-hook 'rust-mode-hook #'lsp)
+
+(use-package company-lsp)
+(push 'company-lsp company-backends)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+
 (use-package helm)
 (set-face-attribute 'helm-selection nil 
                     :background "purple"
@@ -169,7 +182,7 @@ point reaches the beginning or end of the buffer, stop there."
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
+    (cargo xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
