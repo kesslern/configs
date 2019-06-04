@@ -1,4 +1,9 @@
-                                        ; Initialize package management
+;;; init.el --- test
+;;; Commentary:
+;;; kesslern's Emacs config
+
+;;; Code:
+;;; Initialize package management
 (require 'package)
 (add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
 (package-initialize)
@@ -12,7 +17,6 @@
 
 ;;; Add & Configure Packages
 (use-package arduino-mode)
-(use-package company)
 (use-package company-arduino)
 (use-package company-c-headers)
 (use-package company-shell)
@@ -20,8 +24,22 @@
 (use-package kotlin-mode)
 (use-package markdown-mode)
 (use-package meghanada)
+(use-package yasnippet)
 (use-package org)
-(use-package restclient)
+
+(use-package flycheck
+  :hook (prog-mode . flycheck-mode))
+
+(use-package company
+  :hook (prog-mode . company-mode)
+  :config (setq company-tooltip-align-annotations t)
+          (setq company-minimum-prefix-length 1))
+
+(use-package lsp-mode
+  :commands lsp
+  :config (require 'lsp-clients))
+
+(use-package lsp-ui)
 
 (use-package hl-todo)
 (global-hl-todo-mode)
@@ -42,14 +60,18 @@
 (use-package which-key)
 (which-key-mode)
 
-(use-package rust-mode)
+(use-package toml-mode)
+
+(use-package rust-mode
+  :hook (rust-mode . lsp))
+(require 'rust-mode)
+
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
+
+(use-package flycheck-rust
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 (setq rust-format-on-save t)
-
-(use-package cargo)
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
-
-(use-package lsp-mode)
-(add-hook 'rust-mode-hook #'lsp)
 
 (use-package company-lsp)
 (push 'company-lsp company-backends)
@@ -182,7 +204,7 @@ point reaches the beginning or end of the buffer, stop there."
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (cargo xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
+    (company-lsp lsp-ui cargo xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
