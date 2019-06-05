@@ -22,10 +22,13 @@
 (use-package company-shell)
 (use-package groovy-mode)
 (use-package kotlin-mode)
+(use-package lsp-ui)
 (use-package markdown-mode)
 (use-package meghanada)
-(use-package yasnippet)
 (use-package org)
+(use-package toml-mode)
+(use-package web-mode)
+(use-package yasnippet)
 
 (use-package flycheck
   :hook (prog-mode . flycheck-mode))
@@ -39,63 +42,67 @@
   :commands lsp
   :config (require 'lsp-clients))
 
-(use-package lsp-ui)
+(use-package hl-todo
+  :config
+  (global-hl-todo-mode))
 
-(use-package hl-todo)
-(global-hl-todo-mode)
+(use-package js2-mode
+  :config
+  (setq js2-strict-missing-semi-warning nil)
+  (setq js2-missing-semi-one-line-override t))
 
-(use-package js2-mode)
-(setq js2-strict-missing-semi-warning nil)
-(setq js2-missing-semi-one-line-override t)
+(use-package xclip
+  :config
+  (xclip-mode +1))
 
-(use-package xclip)
-(xclip-mode +1)
+(use-package solarized-theme
+  :config
+  (load-theme 'solarized-dark t))
 
-(use-package solarized-theme)
-(load-theme 'solarized-dark t)
+(use-package telephone-line
+  :config
+  (telephone-line-mode 1))
 
-(use-package telephone-line)
-(telephone-line-mode 1)
-
-(use-package which-key)
-(which-key-mode)
-
-(use-package toml-mode)
+(use-package which-key
+  :config
+  (which-key-mode))
 
 (use-package rust-mode
   :hook (rust-mode . lsp))
-(require 'rust-mode)
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 
 (use-package flycheck-rust
-  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-(setq rust-format-on-save t)
+  :hook (flycheck-mode-hook . flycheck-rust-setup)
+  :config
+  (setq rust-format-on-save t))
 
-(use-package company-lsp)
-(push 'company-lsp company-backends)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(use-package company-lsp
+  :after (rust-mode)
+  :config
+  (push 'company-lsp company-backends)
+  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
 
-(use-package helm)
-(set-face-attribute 'helm-selection nil 
-                    :background "purple"
-                    :foreground "black")
-(helm-mode 1)
-(helm-autoresize-mode t)
-(setq helm-boring-buffer-regexp-list
-      '("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf"))
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(use-package helm
+  :config
+  (set-face-attribute 'helm-selection nil
+                      :background "purple"
+                      :foreground "black")
+  (helm-mode 1)
+  (helm-autoresize-mode t)
+  (defvar helm-boring-buffer-regexp-list
+    '("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf"))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x b") 'helm-mini)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files))
 
 (use-package smart-hungry-delete
   :ensure t
   :bind (("DEL" . smart-hungry-delete-backward-char)
 		 ("C-d" . smart-hungry-delete-forward-char))
-  :defer nil ;; dont defer so we can add our functions to hooks 
-  :config (smart-hungry-delete-add-default-hooks)
-  )
+  :defer nil ;; dont defer so we can add our functions to hooks
+  :config (smart-hungry-delete-add-default-hooks))
 
 (use-package auto-package-update
    :ensure t
@@ -135,24 +142,20 @@
 
 ;;; Use 2 space indents for most languages
 (defun my-setup-indent (n)
+  "Apply N spaces of indentation for various modes."
   (setq-local standard-indent n)
   (setq-local c-basic-offset n)
-  (setq-local javascript-indent-level n)
   (setq-local js-indent-level n)
-  (setq-local react-indent-level n)
   (setq-local js2-basic-offset n)
   (setq-local web-mode-attr-indent-offset n)
   (setq-local web-mode-code-indent-offset n)
   (setq-local web-mode-css-indent-offset n)
   (setq-local web-mode-markup-indent-offset n)
   (setq-local web-mode-sql-indent-offset n)
-  (setq-local web-mode-attr-value-indent-offset n)
-  (setq-local css-indent-offset n)
-  (setq-local sh-basic-offset n)
-  (setq-local sh-indentation n))
+  (setq-local web-mode-attr-value-indent-offset n))
 
 (defun my-personal-code-style ()
-  ;; use space instead of tab
+  "Use spaces instead of tabs and two space indent."
   (setq indent-tabs-mode nil)
   ;; indent 2 spaces width
   (my-setup-indent 2))
@@ -189,7 +192,7 @@ point reaches the beginning or end of the buffer, stop there."
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
-;; remap C-a to `smarter-move-beginning-of-line'
+;; remap C-a to smarter-move-beginning-of-line
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
@@ -204,7 +207,7 @@ point reaches the beginning or end of the buffer, stop there."
  '(helm-mode t)
  '(package-selected-packages
    (quote
-    (company-lsp lsp-ui cargo xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
+    (jsx-mode react-mode web-mode sh-mode company-lsp lsp-ui cargo xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -215,3 +218,6 @@ point reaches the beginning or end of the buffer, stop there."
  '(org-block-begin-line ((t (:inherit org-meta-line :underline nil))))
  '(telephone-line-accent-active ((t (:inherit mode-line :background "darkslateblue" :foreground "white" :underline nil))))
  '(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background "grey11" :foreground "gray40")))))
+
+(provide 'init.el)
+;;; init.el ends here
