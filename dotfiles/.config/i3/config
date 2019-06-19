@@ -29,7 +29,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+apostrophe kill
 
 # start dmenu (a program launcher)
-bindsym $mod+e exec rofi -show run
+bindsym $mod+e exec rofi -theme solarized -font "ROFI_FONT" -show combi
 
 # change focus
 bindsym $mod+h focus left
