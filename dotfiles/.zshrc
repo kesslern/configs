@@ -30,6 +30,7 @@ if [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
 fi
 
+source $HOME/.zsh/plugins/bd.zsh
 source $ZSH/oh-my-zsh.sh
 
 # Options should be set after sourcing oh-my-zsh.sh
