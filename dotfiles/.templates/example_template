@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TEMPLATE=`cat <<EOF
+This is an example template.
+Variable: {{TEST}}
+EOF
+`
+
+read -p "Test var: " TEST
+export TEST=$TEST
+
+echo "${TEMPLATE}" | mo

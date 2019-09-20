@@ -70,6 +70,11 @@ if [ -d "$HOME/.bin" ]; then
     export PATH=$PATH:$HOME/.bin
 fi
 
+# Add ~/.templates to the path if it exists
+if [ -d "$HOME/.templates" ]; then
+    export PATH=$PATH:$HOME/.templates
+fi
+
 # Alias editor commands to emacs wrapper if available
 if command_exists ew; then
     alias nano=ew
