@@ -65,6 +65,11 @@ if command_exists icdiff; then
     alias diff=icdiff
 fi
 
+# Use icdiff for diff where available
+if command_exists exa; then
+    alias e=exa
+fi
+
 # Add ~/.bin to the path if it exists
 if [ -d "$HOME/.bin" ]; then
     export PATH=$PATH:$HOME/.bin
