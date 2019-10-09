@@ -5,7 +5,7 @@
 # Run when restarting i3
 exec_always --no-startup-id compton
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-scale $HOME/.wallpaper.jpg
+exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-fill $HOME/.wallpaper.jpg
 exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
 
 # Backlight control
@@ -28,7 +28,7 @@ bindsym $mod+Return exec kitty
 # kill focused window
 bindsym $mod+Shift+apostrophe kill
 
-# start dmenu (a program launcher)
+# start rofi (a program launcher)
 bindsym $mod+e exec rofi -theme solarized -font "ROFI_FONT" -show combi
 
 # change focus
@@ -92,8 +92,15 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
-bindsym $mod+g workspace prev
-bindsym $mod+c workspace next
+
+bindsym $mod+g workspace next
+bindsym $mod+c workspace prev
+
+bindsym $mod+Shift+g move container to output left
+bindsym $mod+Shift+c move container to output right
+
+bindsym $mod+Shift+w move workspace to output left
+bindsym $mod+Shift+m move workspace to output right
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -192,4 +199,15 @@ for_window [class="Kmix"] floating enable; border none
 for_window [class="Klipper"] floating enable; border none
 for_window [class="Plasmoidviewer"] floating enable; border none
 for_window [class="(?i)*nextcloud*"] floating disable
+
 for_window [class="plasmashell" window_type="notification"] floating enable, border none, move right 700px, move down 450px, no_focus 
+for_window [title="Desktop - Plasma"] kill, floating enable, border none
+
+# Don’t let notifications and non-interactive pop-up windows steal focus
+no_focus [class="plasmashell" window_type="notification"]
+no_focus [class="plasmashell" window_type="on_screen_display"]
+for_window [title="Desktop - Plasma"] kill, floating enable, border none
+
+# Don’t let notifications and non-interactive pop-up windows steal focus
+no_focus [class="plasmashell" window_type="notification"]
+no_focus [class="plasmashell" window_type="on_screen_display"]
