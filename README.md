@@ -1,27 +1,25 @@
 # kesslern dotfiles
 
-## Dependencies
+## Dependencies & Supported Apps
 + git
 + zsh
 + emacs 24+
 + tmux
-+ if using i3:
-  + i3-gaps
-  + xfce4-panel
++ autojump
++ if using i3 (also supports i3 in kde):
+  + i3
   + feh
   + compton
   + polybar
   + noto color emoji
   + pulseaudio
-+ if using `kb-light.py` to change keyboard backlight:
-  + python3
-  + upower
 + for formatting JSON, python3
 + for formattting XML, xmllint
 + optional:
   + lesspipe
   + thefuck
-  + xclip or pbcopy/pbpaste
+  + xclip (Linux) or pbcopy/pbpaste (Mac)
+  + blueman-applet
 
 ## Setup
 
