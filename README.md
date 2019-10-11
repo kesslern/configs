@@ -20,6 +20,7 @@
   + thefuck
   + xclip (Linux) or pbcopy/pbpaste (Mac)
   + blueman-applet
+  + exa, aliased to `e`
 
 ## Setup
 
