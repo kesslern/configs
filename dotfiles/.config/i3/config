@@ -29,7 +29,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+apostrophe kill
 
 # start rofi (a program launcher)
-bindsym $mod+e exec rofi -theme solarized -font "ROFI_FONT" -show combi
+bindsym $mod+e exec rofi -theme solarized -font "ROFI_FONT" -show combi -show-icons
 
 # change focus
 bindsym $mod+h focus left
