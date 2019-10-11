@@ -5,12 +5,9 @@
 # Run when restarting i3
 exec_always --no-startup-id compton
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id [ -d $HOME/.wallpapers ] && feh --no-fehbg --bg-fill --recursive --randomize "${HOME}/.wallpapers/" && wallpaper-cycle.sh
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-fill $HOME/.wallpaper.jpg
 exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
-
-# Backlight control
-bindsym XF86KbdBrightnessUp exec kb-light.py +
-bindsym XF86KbdBrightnessDown exec kb-light.py -
 
 # Use Windows key for modifier
 set $mod Mod4
