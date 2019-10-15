@@ -6,6 +6,7 @@
 + emacs 24+
 + tmux
 + autojump
++ Cascadio Code
 + if using i3 (also supports i3 in kde):
   + i3
   + feh
