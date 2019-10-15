@@ -185,6 +185,9 @@ bindsym XF86AudioPrev exec playerctl previous
 for_window [instance="sun-awt-X11-XWindowPeer"] border pixel 0
 for_window [class="^jetbrains-.+"][window_type=dialog] focus
 
+# Chrome notifications keep moving the mouse around
+mouse_warping none
+
 # For KDE
 for_window [title="Desktop — Plasma"] kill; floating enable; border none
 for_window [class="plasmashell"] floating enable;
@@ -201,10 +204,4 @@ for_window [class="plasmashell" window_type="notification"] floating enable, bor
 for_window [title="Desktop - Plasma"] kill, floating enable, border none
 
 # Don’t let notifications and non-interactive pop-up windows steal focus
-no_focus [class="plasmashell" window_type="notification"]
-no_focus [class="plasmashell" window_type="on_screen_display"]
-for_window [title="Desktop - Plasma"] kill, floating enable, border none
-
-# Don’t let notifications and non-interactive pop-up windows steal focus
-no_focus [class="plasmashell" window_type="notification"]
-no_focus [class="plasmashell" window_type="on_screen_display"]
+no_focus [class="plasmashell"]
