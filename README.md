@@ -1,27 +1,32 @@
 # kesslern dotfiles
 
-## Dependencies & Supported Apps
+## Dependencies
 + git
++ dot-templator
++ Cascadia Code
+
+## Supported Applications
 + zsh
+  + oh-my-zsh setup (required)
 + emacs 24+
 + tmux
+  + tmux plugin manager setup (required)
 + autojump
-+ Cascadio Code
-+ if using i3 (also supports i3 in kde):
-  + i3
++ i3:
+  + compton (required)
   + feh
-  + compton
-  + polybar
-  + noto color emoji
+    + Wallpaper at `~/.wallpaper.jpg` is set
+    + Wallpapers in `~/.wallpapers` are cycled every 20 minutes
+  + polybar and noto color emoji
   + pulseaudio
-+ for formatting JSON, python3
-+ for formattting XML, xmllint
-+ optional:
-  + lesspipe
-  + thefuck
-  + xclip (Linux) or pbcopy/pbpaste (Mac)
   + blueman-applet
-  + exa, aliased to `e`
++ python3 for formatting JSON
++ xmllint for formattting XML
++ lesspipe
++ thefuck
++ xclip (Linux) or pbcopy/pbpaste (MacOS)
+  + aliases setup for `paste` and `copy`
++ exa, aliased to `e`
 
 ## Setup
 
