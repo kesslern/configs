@@ -9,6 +9,8 @@ exec_always --no-startup-id [ -d $HOME/.wallpapers ] && feh --no-fehbg --bg-fill
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-fill $HOME/.wallpaper.jpg
 exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
 
+exec_always --no-startup-id [ $(which xinput) ] &&  xinput set-prop "MX Ergo Mouse" "libinput Accel Speed" .25
+
 # Use Windows key for modifier
 set $mod Mod4
 
