@@ -12,23 +12,32 @@ cyan = #89ddff
 
 [bar/bar]
 width = 100%
-height = POLYBAR_HEIGHT
-separator = " "
+height = 24
+separator = "  "
 background = ${colors.background}
 foreground = ${colors.foreground}
 underline-size = 0
 overline-size = 0
-font-0 = "DejaVu Sans Mono:pixelsize=POLYBAR_FONT_SIZE:antialias=false;1"
-font-1 = "NotoEmoji:scale=POLYBAR_FONT_SCALE;"
+font-0 = "Cascadia Code:pixelsize=12:antialias=true;3"
+font-1 = "Segoe UI Symbol:size=20;4"
+
+padding-right = 1
+
+wm-restack = i3
+tray-position = right
+tray-padding = 2
+tray-background = ${colors.background}
 
 modules-left = workspaces
 modules-center = title
-modules-right = battery volume time
+modules-right = keyboard battery volume time
 
 [module/volume]
 type = internal/pulseaudio
 format-volume-foreground = ${colors.yellow}
 format-volume = <ramp-volume> <label-volume>
+
+format-muted-padding = 2
 
 label-muted = 🔇
 ramp-volume-0 = 🔈
@@ -43,13 +52,15 @@ label-maxlen = 75
 [module/battery]
 type = internal/battery
 
-label-charging = 🔋 %percentage%%
-label-discharging = 🔋 %percentage%%
-label-full = 🔋 %percentage% 
+full-at = 98
+
+label-charging = 🔌🔋 %percentage%%
+label-discharging = ⚡ 🔋 %percentage%%
+label-full = 🔌🔋
 
 ; Use: $ ls -1 /sys/class/power_supply/
 battery = BAT0
-eadapter = AC0
+adapter = AC
 
 [module/workspaces]
 type = internal/i3
@@ -74,3 +85,10 @@ interval = 40
 label-foreground = ${colors.magenta}
 
 date = "%I:%M %p"
+
+[module/keyboard]
+type = internal/xkeyboard
+label-layout = %name%
+
+label-icon-0 = us
+label-icon-1 = dv
