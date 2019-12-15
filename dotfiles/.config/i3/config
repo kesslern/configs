@@ -11,6 +11,7 @@ exec_always --no-startup-id [ -f $HOME/.config/polybar/launch.sh ] && $HOME/.con
 exec_always --no-startup-id [ -d $HOME/.wallpapers ] && feh --no-fehbg --bg-fill --recursive --randomize "${HOME}/.wallpapers/" && wallpaper-cycle.sh
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-fill $HOME/.wallpaper.jpg
 exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
+exec-always --no-startup-id setxkbmap -layout us -variant dvorak -option ctrl:nocaps
 
 # Use Windows key for modifier
 set $mod Mod4
