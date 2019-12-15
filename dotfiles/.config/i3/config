@@ -30,7 +30,10 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+apostrophe kill
 
 # Win+D: Launch Rofi
-bindsym $mod+e exec rofi -theme solarized -font "ROFI_FONT" -show combi -show-icons
+bindsym $mod+e exec rofi -show combi
+
+# WinShift+D: Launch Rofimoji picker
+bindsym $mod+Shift+e exec rofimoji
 
 # Win+[J/K/L/;]: Change window focus
 bindsym $mod+h focus left
