@@ -117,3 +117,7 @@ fi
 if ! command_exists open; then
    alias open="xdg-open"
 fi
+
+if [ -e /usr/share/nvm/init-nvm.sh ]; then
+    source /usr/share/nvm/init-nvm.sh
+fi
