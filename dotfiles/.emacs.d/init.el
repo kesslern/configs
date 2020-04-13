@@ -114,7 +114,6 @@
    (auto-package-update-maybe))
 
 ;;; Customize built-in modes and settings
-(cua-mode t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (xterm-mouse-mode 1)
