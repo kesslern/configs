@@ -8,6 +8,7 @@
 ## Supported Applications
 + zsh
   + oh-my-zsh setup (required)
+  + fzf
 + emacs 24+
 + tmux
   + tmux plugin manager setup (required)

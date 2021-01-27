@@ -13,17 +13,18 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-        sudo
-        common-aliases
         archlinux
-        history
-        systemd
-        gitfast
+        common-aliases
         dirhistory
-        yarn
-        httpie
-        gradle
         docker
+        fzf
+        gitfast
+        gradle
+        history
+        httpie
+        sudo
+        systemd
+        yarn
 )
 
 if [ "$TERM" = "xterm" ]; then
