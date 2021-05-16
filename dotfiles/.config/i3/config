@@ -4,14 +4,24 @@
 #
 # For use with the Dvorak keyboard layout.
 
-
-# Run when restarting i3
+## Runs when restarting i3
 exec_always --no-startup-id picom
 exec_always --no-startup-id [ -f $HOME/.config/polybar/launch.sh ] && $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id [ -d $HOME/.wallpapers ] && feh --no-fehbg --bg-fill --recursive --randomize "${HOME}/.wallpapers/" && wallpaper-cycle.sh
 exec_always --no-startup-id [ -f $HOME/.wallpaper.jpg ] && feh --bg-fill $HOME/.wallpaper.jpg
 exec_always --no-startup-id [ $(which blueman-applet) ] && blueman-applet
 exec-always --no-startup-id setxkbmap -layout us -variant dvorak -option ctrl:nocaps
+
+## Applcations
+
+# Win+Enter: Open Terminal
+bindsym $mod+Return exec kitty
+
+# Win+Shift+O: Capture screenshot and copy to clipboard
+bindsym $mod+Shift+r exec spectacle -rbc
+
+# Win+O: Capture screenshot
+bindsym $mod+r exec spectacle -rb
 
 # Use Windows key for modifier
 set $mod Mod4
@@ -22,9 +32,6 @@ font pango:Cascadia Code 8
 
 # Win+Mouse: Drag floating windows
 floating_modifier $mod
-
-# Win+Enter: Open Terminal
-bindsym $mod+Return exec kitty
 
 # Win+Shift+Q: Kill focused window
 bindsym $mod+Shift+apostrophe kill
