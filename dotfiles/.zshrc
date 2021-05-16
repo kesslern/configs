@@ -88,6 +88,11 @@ if [ -d "$HOME/.templates" ]; then
     export PATH=$PATH:$HOME/.templates
 fi
 
+# Add ~/go/bin to the path if it exists
+if [ -d "$HOME/go/bin" ]; then
+    export PATH=$PATH:$HOME/go/bin
+fi
+
 # Alias editor commands to emacs wrapper if available
 if command_exists ew; then
     alias nano=ew
