@@ -93,6 +93,11 @@ if [ -d "$HOME/go/bin" ]; then
     export PATH=$PATH:$HOME/go/bin
 fi
 
+# Source gcloud autocompletes if they exist
+if [ -d "/opt/google-cloud-sdk/completion.zsh.inc" ]; then
+    source /opt/google-cloud-sdk/completion.zsh.inc
+fi
+
 # Alias editor commands to emacs wrapper if available
 if command_exists ew; then
     alias nano=ew
@@ -128,3 +133,8 @@ fi
 if [ -e /usr/share/nvm/init-nvm.sh ]; then
     source /usr/share/nvm/init-nvm.sh
 fi
+
+if [ -e /usr/bin/kubectl ]; then
+    source <(kubectl completion zsh)
+fi
+
