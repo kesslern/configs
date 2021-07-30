@@ -73,26 +73,6 @@ if command_exists exa; then
     alias e=exa
 fi
 
-# Add ~/.bin to the path if it exists
-if [ -d "$HOME/.bin" ]; then
-    export PATH=$PATH:$HOME/.bin
-fi
-
-# Add ~/.cargo/bin to the path if it exists
-if [ -d "$HOME/.cargo/bin" ]; then
-    export PATH=$PATH:$HOME/.cargo/bin
-fi
-
-# Add ~/.templates to the path if it exists
-if [ -d "$HOME/.templates" ]; then
-    export PATH=$PATH:$HOME/.templates
-fi
-
-# Add ~/go/bin to the path if it exists
-if [ -d "$HOME/go/bin" ]; then
-    export PATH=$PATH:$HOME/go/bin
-fi
-
 # Source gcloud autocompletes if they exist
 if [ -d "/opt/google-cloud-sdk/completion.zsh.inc" ]; then
     source /opt/google-cloud-sdk/completion.zsh.inc
