@@ -18,9 +18,6 @@
   + feh
     + Wallpaper at `~/.wallpaper.jpg` is set
     + Wallpapers in `~/.wallpapers` are cycled every 20 minutes
-  + polybar and noto color emoji
-  + pulseaudio
-  + blueman-applet
 + python3 for formatting JSON
 + xmllint for formattting XML
 + lesspipe
