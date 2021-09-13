@@ -15,6 +15,7 @@ sudo pacman -S --noconfirm \
   stow \
   thefuck \
   ttf-cascadia-code \
+  noto-fonts-emoji \
   tmux \
   xclip \
   zsh \
