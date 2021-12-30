@@ -42,6 +42,7 @@ plugins=(
         gradle
         history
         httpie
+        npm
         sudo
         systemd
         yarn
@@ -121,6 +122,8 @@ fi
 alias -g paste="$PASTE"
 alias -g copy="$COPY"
 alias -g COPY="| $COPY"
+
+alias -g npm="nocorrect npm"
 
 if command_exists lesspipe.sh; then
     export LESSOPEN="|lesspipe.sh %s"
