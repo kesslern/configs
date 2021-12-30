@@ -7,34 +7,43 @@
 
 ## Supported Applications
 + zsh
-  + oh-my-zsh setup (required)
-  + fzf
-+ emacs 24+
+  + oh-my-zsh
+  + fzf history search
++ emacs
 + tmux
-  + tmux plugin manager setup (required)
+  + tmux plugin manager
 + autojump
-+ i3:
-  + compton (required)
++ i3
+  + picom
   + feh
     + Wallpaper at `~/.wallpaper.jpg` is set
     + Wallpapers in `~/.wallpapers` are cycled every 20 minutes
 + python3 for formatting JSON
+  + append `JSON` to the end of a shell command to format the output as JSON
 + xmllint for formattting XML
+  + append `XML` to the end of a shell command to format the output as XML
 + lesspipe
 + thefuck
 + xclip (Linux) or pbcopy/pbpaste (MacOS)
-  + aliases setup for `paste` and `copy`
-+ exa, aliased to `e`
+  + aliases to `copy` and `paste`
++ exa
+  + aliased to `e`
 
 ## Setup
 
-### oh-my-zsh
+Run `install/arch.sh` for Arch Linux.
+
+### Manual Setup
+
+Install dependencies then install `oh-my-zsh` and the Tmux Plugin Manager.
+
+#### oh-my-zsh
 [Full documentation here.](https://github.com/robbyrussell/oh-my-zsh)
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-### Tmux Plugin Manager
+#### Tmux Plugin Manager
 [Full documentation here.](https://github.com/tmux-plugins/tpm)
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -52,24 +61,4 @@ cd configs/
 
 ## License
 
-MIT
-
-Copyright (c) 2019 Nathan Kessler
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+[MIT](./license.md)

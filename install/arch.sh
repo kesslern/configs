@@ -3,7 +3,6 @@
 echo "Installing dependencies..."
 sudo pacman -S --noconfirm \
   adobe-source-code-pro-fonts \
-  compton \
   emacs \
   exa \
   feh \
@@ -11,17 +10,19 @@ sudo pacman -S --noconfirm \
   i3-wm \
   lesspipe \
   libxml2 \
+  noto-fonts-emoji \
+  picom \
   python \
   stow \
   thefuck \
-  ttf-cascadia-code \
-  noto-fonts-emoji \
   tmux \
+  ttf-cascadia-code \
   xclip \
   zsh \
 || exit 1
 
 yay -S --noconfirm \
+  autojump \
   dot-templater \
   ttf-nanum \
 || exit 1
@@ -42,10 +43,3 @@ else
   || exit 1
 fi
 
-echo "Installing spacemacs"
-if [ -e ~/.emacs.d/init.el ]; then
-  echo "spacemacs already installed. Skipping..." 
-else
-  git clone --depth 1 https://github.com/syl20bnr/spacemacs ~/.emacs.d \
-  || exit 1
-fi

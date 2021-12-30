@@ -1,184 +1,130 @@
-;;; init.el --- test
-;;; Commentary:
-;;; kesslern's Emacs config
+;;; Based on Emfy 0.1.0-dev <https://github.com/susam/emfy>
 
-;;; Code:
-;;; Initialize package management
-(require 'package)
-(add-to-list 'package-archives (cons "melpa" "https://melpa.org/packages/") t)
-(package-initialize)
+;; Customize user interface.
+(menu-bar-mode 0)
+(when (display-graphic-p)
+  (tool-bar-mode 0)
+  (scroll-bar-mode 1))
+(setq inhibit-startup-screen t)
+(column-number-mode)
 
-;;; Add use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
+;; Theme.
+(load-theme 'wombat)
+(set-face-background 'default "#111")
+(set-face-background 'cursor "#c96")
+(set-face-background 'isearch "#c60")
+(set-face-foreground 'isearch "#eee")
+(set-face-background 'lazy-highlight "#960")
+(set-face-foreground 'lazy-highlight "#ccc")
+(set-face-foreground 'font-lock-comment-face "#fc0")
 
-;;; Add & Configure Packages
-(use-package arduino-mode)
-(use-package company-arduino)
-(use-package company-c-headers)
-(use-package company-shell)
-(use-package groovy-mode)
-(use-package kotlin-mode)
-(use-package lsp-ui)
-(use-package markdown-mode)
-(use-package meghanada)
-(use-package org)
-(use-package toml-mode)
-(use-package web-mode)
-(use-package yasnippet)
+;; Interactively do things.
+(ido-mode 1)
+(ido-everywhere)
+(setq ido-enable-flex-matching t)
 
-(use-package flycheck
-  :hook (prog-mode . flycheck-mode))
+;; Show stray whitespace.
+(setq-default show-trailing-whitespace t)
+(setq-default indicate-empty-lines t)
+(setq-default indicate-buffer-boundaries 'left)
 
-(use-package company
-  :hook (prog-mode . company-mode)
-  :config (setq company-tooltip-align-annotations t)
-          (setq company-minimum-prefix-length 1))
+;; Consider a period followed by a single space to be end of sentence.
+(setq sentence-end-double-space nil)
 
-(use-package lsp-mode
-  :commands lsp
-  :config (require 'lsp-clients))
-
-(use-package hl-todo
-  :config
-  (global-hl-todo-mode))
-
-(use-package js2-mode
-  :config
-  (setq js2-strict-missing-semi-warning nil)
-  (setq js2-missing-semi-one-line-override t))
-
-(use-package xclip
-  :config
-  (xclip-mode +1))
-
-(use-package solarized-theme
-  :config
-  (load-theme 'solarized-dark t))
-
-(use-package telephone-line
-  :config
-  (telephone-line-mode 1))
-
-(use-package which-key
-  :config
-  (which-key-mode))
-
-(use-package rust-mode
-  :hook (rust-mode . lsp))
-
-(use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
-
-(use-package flycheck-rust
-  :hook (flycheck-mode-hook . flycheck-rust-setup)
-  :config
-  (setq rust-format-on-save t))
-
-(use-package company-lsp
-  :after (rust-mode)
-  :config
-  (push 'company-lsp company-backends)
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
-
-(use-package helm
-  :config
-  (set-face-attribute 'helm-selection nil
-                      :background "purple"
-                      :foreground "black")
-  (helm-mode 1)
-  (helm-autoresize-mode t)
-  (defvar helm-boring-buffer-regexp-list
-    '("\\` " "\\*helm" "\\*helm-mode" "\\*Echo Area" "\\*Minibuf"))
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (global-set-key (kbd "C-x b") 'helm-mini)
-  (global-set-key (kbd "C-x C-b") 'helm-mini)
-  (global-set-key (kbd "C-x f") 'helm-find-files)
-  (global-set-key (kbd "C-x C-f") 'helm-find-files))
-
-(use-package smart-hungry-delete
-  :ensure t
-  :bind (("DEL" . smart-hungry-delete-backward-char)
-		 ("C-d" . smart-hungry-delete-forward-char))
-  :defer nil ;; dont defer so we can add our functions to hooks
-  :config (smart-hungry-delete-add-default-hooks))
-
-(use-package auto-package-update
-   :ensure t
-   :config
-   (setq auto-package-update-delete-old-versions t
-         auto-package-update-interval 4)
-   (auto-package-update-maybe))
-
-;;; Customize built-in modes and settings
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(xterm-mouse-mode 1)
-(show-paren-mode 1)
-(save-place-mode 1)
-(electric-pair-mode 1)
-
+;; Use spaces, not tabs, for indentation.
 (setq-default indent-tabs-mode nil)
-(setq scroll-error-top-bottom t)
-(setq require-final-newline t)
-(setq scroll-step 1)
+
+;; Display the distance between two tab stops as 4 characters wide.
+(setq-default tab-width 4)
+
+;; Indentation setting for various languages.
+(setq c-basic-offset 4)
+(setq js-indent-level 2)
+(setq css-indent-offset 2)
+
+;; Highlight matching pairs of parentheses.
+(setq show-paren-delay 0)
+(show-paren-mode)
+
+;; Write auto-saves and backups to separate directory.
+(make-directory "~/.tmp/emacs/auto-save/" t)
+(setq auto-save-file-name-transforms '((".*" "~/.tmp/emacs/auto-save/" t)))
+(setq backup-directory-alist '(("." . "~/.tmp/emacs/backup/")))
+
+;; Do not move the current file while creating backup.
+(setq backup-by-copying t)
+
+;; Disable lockfiles.
 (setq create-lockfiles nil)
 
-;;; Store backup files in temporary filesytem to prevent clutter
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+;; Workaround for https://debbugs.gnu.org/34341 in GNU Emacs <= 26.3.
+(when (and (version< emacs-version "26.3") (>= libgnutls-version 30603))
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
-;;; Add folder names if buffer names are identical
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
+;; Enable installation of packages from MELPA.
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
 
-;;; Scroll with mouse
-(unless window-system
-  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
-  (global-set-key (kbd "<mouse-5>") 'scroll-up-line))
+;; Write customizations to a separate file instead of this file.
+(setq custom-file (concat user-emacs-directory "custom.el"))
 
-;;; Use 2 space indents for most languages
-(defun my-setup-indent (n)
-  "Apply N spaces of indentation for various modes."
-  (setq-local standard-indent n)
-  (setq-local c-basic-offset n)
-  (setq-local js-indent-level n)
-  (setq-local js2-basic-offset n)
-  (setq-local web-mode-attr-indent-offset n)
-  (setq-local web-mode-code-indent-offset n)
-  (setq-local web-mode-css-indent-offset n)
-  (setq-local web-mode-markup-indent-offset n)
-  (setq-local web-mode-sql-indent-offset n)
-  (setq-local web-mode-attr-value-indent-offset n))
+;; Install packages.
+(setq package-list '(markdown-mode paredit rainbow-delimiters))
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
-(defun my-personal-code-style ()
-  "Use spaces instead of tabs and two space indent."
-  (setq indent-tabs-mode nil)
-  ;; indent 2 spaces width
-  (my-setup-indent 2))
+;; Enable Paredit.
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
+(add-hook 'ielm-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
 
-(my-personal-code-style)
+;; Enable Rainbow Delimiters.
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'ielm-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-interaction-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
 
-;; Some major modes overwrite indentation settings. Run code stye settings after major mode load.
-(add-hook 'css-mode-hook 'my-personal-code-style)
-(add-hook 'js2-mode-hook 'my-personal-code-style)
-(add-hook 'react-mode-hook 'my-personal-code-style)
-(add-hook 'sh-mode-hook 'my-personal-code-style)
-(add-hook 'js-mode-hook 'my-personal-code-style)
+;; Customize Rainbow Delimiters.
+(require 'rainbow-delimiters)
+(set-face-foreground 'rainbow-delimiters-depth-1-face "#c66")  ; red
+(set-face-foreground 'rainbow-delimiters-depth-2-face "#6c6")  ; green
+(set-face-foreground 'rainbow-delimiters-depth-3-face "#69f")  ; blue
+(set-face-foreground 'rainbow-delimiters-depth-4-face "#cc6")  ; yellow
+(set-face-foreground 'rainbow-delimiters-depth-5-face "#6cc")  ; cyan
+(set-face-foreground 'rainbow-delimiters-depth-6-face "#c6c")  ; magenta
+(set-face-foreground 'rainbow-delimiters-depth-7-face "#ccc")  ; light gray
+(set-face-foreground 'rainbow-delimiters-depth-8-face "#999")  ; medium gray
+(set-face-foreground 'rainbow-delimiters-depth-9-face "#666")  ; dark gray
 
+;; Custom command.
+(defun show-current-time ()
+  "Show current time for 2 seconds."
+  (interactive)
+  (message (current-time-string))
+  (sleep-for 2)
+  (message nil))
+
+;; Custom key-binding.
+(global-set-key (kbd "C-c t") 'show-current-time)
+
+;; Enable mouse in terminal
+(xterm-mouse-mode)
+(global-set-key [remap move-beginning-of-line]
+                'smarter-move-beginning-of-line)
+
+;; Smart move-to-begginning-of-line command 
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
-
 Move point to the first non-whitespace character on this line.
 If point is already there, move to the beginning of the line.
 Effectively toggle between the first non-whitespace character and
 the beginning of the line.
-
 If ARG is not nil or 1, move forward ARG - 1 lines first.  If
 point reaches the beginning or end of the buffer, stop there."
   (interactive "^p")
@@ -193,33 +139,30 @@ point reaches the beginning or end of the buffer, stop there."
     (back-to-indentation)
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
-
-;; remap C-a to smarter-move-beginning-of-line
 (global-set-key [remap move-beginning-of-line]
                 'smarter-move-beginning-of-line)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
- '(helm-mode t)
- '(package-selected-packages
-   (quote
-    (jsx-mode react-mode web-mode sh-mode company-lsp lsp-ui cargo xclip hl-todo auto-package-update smart-hungry-delete helm which-key telephone-line solarized-theme js2-mode company-shell company-arduino meghanada kotlin-mode groovy-mode markdown-mode arduino-mode use-package))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mode-line ((t (:background "gray18" :foreground "#839496" :box (:line-width 1 :color "#073642" :style unspecified) :overline "#073642" :underline nil))))
- '(mode-line-inactive ((t (:background "gray20" :foreground "#586e75" :box (:line-width 1 :color "#002b36" :style unspecified) :overline "#073642" :underline nil))))
- '(org-block-begin-line ((t (:inherit org-meta-line :underline nil))))
- '(telephone-line-accent-active ((t (:inherit mode-line :background "darkslateblue" :foreground "white" :underline nil))))
- '(telephone-line-accent-inactive ((t (:inherit mode-line-inactive :background "grey11" :foreground "gray40")))))
+;; Scroll by 5 lines at at time
+(setq scroll-step 5)
 
-(provide 'init.el)
-;;; init.el ends here
+;; Auto-insert newlines at end of file
+(setq require-final-newline t)
+
+;; Scroll to top and bottom
+(setq scroll-error-top-bottom t)
+
+;; Restore place when re-opening a file
+(save-place-mode 1)
+
+;; Enable hungry delete
+(use-package smart-hungry-delete
+  :ensure t
+  :bind (("DEL" . smart-hungry-delete-backward-char)
+		 ("C-d" . smart-hungry-delete-forward-char))
+  :defer nil ;; dont defer so we can add our functions to hooks
+  :config (smart-hungry-delete-add-default-hooks))
+
+;; Start server.
+(require 'server)
+(unless (server-running-p)
+  (server-start))
