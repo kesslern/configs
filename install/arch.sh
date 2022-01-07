@@ -7,6 +7,7 @@ sudo pacman -S --noconfirm \
   exa \
   feh \
   fzf \
+  haskell-emojis \
   i3-wm \
   lesspipe \
   libxml2 \
