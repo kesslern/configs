@@ -1,0 +1,6 @@
+sudo setkeycodes 3a 29
+setxkbmap -layout us -option ctrl:nocaps
+sleep 1s
+nohup /home/nathan/.local/share/Steam/steamapps/common/Factorio/bin/x64/factorio &
+sleep 20s
+setxkbmap -layout us -variant dvorak -option ctrl:nocaps
