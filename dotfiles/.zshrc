@@ -23,6 +23,10 @@ if [ -f $HOME/.bash_profile ]; then
     source $HOME/.bash_profile
 fi
 
+if [ -f $HOME/.cargo/bin ]; then
+    source $HOME/.cargo/bin
+fi
+
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
