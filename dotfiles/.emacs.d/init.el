@@ -119,7 +119,7 @@
 ;; Enable mouse in terminal
 (xterm-mouse-mode 1)
 
-;; Smart move-to-begginning-of-line command 
+;; Smart move-to-begginning-of-line command
 (defun smarter-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
 Move point to the first non-whitespace character on this line.
@@ -157,10 +157,10 @@ point reaches the beginning or end of the buffer, stop there."
 
 ;; Enable hungry delete
 (smart-hungry-delete-add-default-hooks)
-(smart-hungry-delete-add-default-hooks)
 (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
 (global-set-key (kbd "<delete>") 'smart-hungry-delete-backward-char)
 (global-set-key (kbd "C-d") 'smart-hungry-delete-forward-char)
+(setq backward-delete-char-untabify-method 'all)
 
 ;; Delete trailing whitespace on save
 (add-hook 'before-save-hook
