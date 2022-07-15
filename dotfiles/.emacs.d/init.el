@@ -77,7 +77,14 @@
   (package-refresh-contents))
 
 ;; Install packages.
-(dolist (package '(markdown-mode paredit rainbow-delimiters smart-hungry-delete lsp-mode rust-mode))
+(dolist (package '(company
+                   lsp-mode
+                   markdown-mode
+                   paredit
+                   rainbow-delimiters
+                   rust-mode
+                   smart-hungry-delete
+                   string-inflection))
   (unless (package-installed-p package)
     (package-install package)))
 
@@ -87,12 +94,14 @@
 (add-hook 'ielm-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'rust-mode-hook 'enable-paredit-mode)
 
 ;; Enable Rainbow Delimiters.
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'ielm-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'lisp-interaction-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'rust-mode-hook 'rainbow-delimiters-mode)
 
 ;; Customize Rainbow Delimiters.
 (require 'rainbow-delimiters)
@@ -115,6 +124,12 @@
 ;; Custom key sequences.
 (global-set-key (kbd "C-c t") 'show-current-time)
 (global-set-key (kbd "C-c d") 'delete-trailing-whitespace)
+
+;; Auto-add parens
+(add-hook 'rust-mode-hook 'electric-pair-mode)
+
+;; Enable LSP
+(add-hook 'rust-mode-hook #'lsp)
 
 ;; Enable mouse in terminal
 (xterm-mouse-mode 1)
