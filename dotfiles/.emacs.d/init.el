@@ -1,14 +1,14 @@
-;;; Based on Emfy 0.1.0-dev <https://github.com/susam/emfy>
+;;; Based off Emfy 0.3.0-dev <https://github.com/susam/emfy>
 
 ;; Customize user interface.
 (menu-bar-mode 0)
 (when (display-graphic-p)
   (tool-bar-mode 0)
-  (scroll-bar-mode 1))
+  (scroll-bar-mode 0))
 (setq inhibit-startup-screen t)
 (column-number-mode)
 
-;; Theme.
+;; Dark theme.
 (load-theme 'wombat)
 (set-face-background 'default "#111")
 (set-face-background 'cursor "#c96")
@@ -22,11 +22,15 @@
 (ido-mode 1)
 (ido-everywhere)
 (setq ido-enable-flex-matching t)
+(fido-mode)
 
 ;; Show stray whitespace.
 (setq-default show-trailing-whitespace t)
 (setq-default indicate-empty-lines t)
 (setq-default indicate-buffer-boundaries 'left)
+
+;; Add a newline automatically at the end of a file while saving.
+(setq-default require-final-newline t)
 
 ;; Consider a period followed by a single space to be end of sentence.
 (setq sentence-end-double-space nil)
@@ -61,6 +65,10 @@
 (when (and (version< emacs-version "26.3") (>= libgnutls-version 30603))
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
 
+;; Write customizations to a separate file instead of this file.
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file t)
+
 ;; Enable installation of packages from MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -68,12 +76,8 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Write customizations to a separate file instead of this file.
-(setq custom-file (concat user-emacs-directory "custom.el"))
-
 ;; Install packages.
-(setq package-list '(markdown-mode paredit rainbow-delimiters))
-(dolist (package package-list)
+(dolist (package '(markdown-mode paredit rainbow-delimiters smart-hungry-delete lsp-mode rust-mode))
   (unless (package-installed-p package)
     (package-install package)))
 
@@ -104,19 +108,16 @@
 
 ;; Custom command.
 (defun show-current-time ()
-  "Show current time for 2 seconds."
+  "Show current time."
   (interactive)
-  (message (current-time-string))
-  (sleep-for 2)
-  (message nil))
+  (message (current-time-string)))
 
-;; Custom key-binding.
+;; Custom key sequences.
 (global-set-key (kbd "C-c t") 'show-current-time)
+(global-set-key (kbd "C-c d") 'delete-trailing-whitespace)
 
 ;; Enable mouse in terminal
-(xterm-mouse-mode)
-(global-set-key [remap move-beginning-of-line]
-                'smarter-move-beginning-of-line)
+(xterm-mouse-mode 1)
 
 ;; Smart move-to-begginning-of-line command 
 (defun smarter-move-beginning-of-line (arg)
@@ -155,12 +156,15 @@ point reaches the beginning or end of the buffer, stop there."
 (save-place-mode 1)
 
 ;; Enable hungry delete
-(use-package smart-hungry-delete
-  :ensure t
-  :bind (("DEL" . smart-hungry-delete-backward-char)
-		 ("C-d" . smart-hungry-delete-forward-char))
-  :defer nil ;; dont defer so we can add our functions to hooks
-  :config (smart-hungry-delete-add-default-hooks))
+(smart-hungry-delete-add-default-hooks)
+(smart-hungry-delete-add-default-hooks)
+(global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
+(global-set-key (kbd "<delete>") 'smart-hungry-delete-backward-char)
+(global-set-key (kbd "C-d") 'smart-hungry-delete-forward-char)
+
+;; Delete trailing whitespace on save
+(add-hook 'before-save-hook
+          'delete-trailing-whitespace)
 
 ;; Start server.
 (require 'server)
