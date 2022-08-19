@@ -2,7 +2,8 @@
 
 ## Dependencies
 + git
-+ dot-templator
++ GNU stow
++ [dot-templater](https://github.com/kesslern/dot-templater)
 + Cascadia Code
 
 ## Supported Applications
@@ -13,11 +14,6 @@
 + tmux
   + tmux plugin manager
 + autojump
-+ i3
-  + picom
-  + feh
-    + Wallpaper at `~/.wallpaper.jpg` is set
-    + Wallpapers in `~/.wallpapers` are cycled every 20 minutes
 + python3 for formatting JSON
   + append `JSON` to the end of a shell command to format the output as JSON
 + xmllint for formattting XML
@@ -49,13 +45,12 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-### Generate the dotfiles
+### Generating the dotfiles
 Dotfiles are generated using [dot-templater](https://github.com/kesslern/dot-templater).
 
 Clone the repository and use dot-templater to template the files. Although dot-templater could place the dotfiles directly into your home directory, it is recommended to place them into a hidden subdirectory and use GNU Stow to link the dotfiles into the home directory.
+
 ```bash
-git clone https://github.com/kesslern/configs.git
-cd configs/
 ./apply.sh [TEMPLATE]
 ```
 
