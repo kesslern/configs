@@ -1,49 +1,22 @@
 # kesslern dotfiles
 
-## Dependencies
-+ git
-+ GNU stow
-+ [dot-templater](https://github.com/kesslern/dot-templater)
-+ Cascadia Code
+## Setup
+Use the script in `install/arch.sh` to set up dependencies.
 
-## Supported Applications
-+ zsh
-  + oh-my-zsh
-  + fzf history search
-+ emacs
-+ tmux
-  + tmux plugin manager
-+ autojump
-+ python3 for formatting JSON
-  + append `JSON` to the end of a shell command to format the output as JSON
-+ xmllint for formattting XML
-  + append `XML` to the end of a shell command to format the output as XML
-+ lesspipe
-+ thefuck
-+ xclip (Linux) or pbcopy/pbpaste (MacOS)
-  + aliases to `copy` and `paste`
-+ exa
-  + aliased to `e`
+## Features
++ Fuzzy shell history search with `fzf`
++ emacs wrapper script aliased to `ew` and `nano`
++ tmux plugin manager setup
++ [autojump](https://github.com/wting/autojump) aliased to `j`
++ Append `JSON` to the end of a shell command to format the output as JSON
++ Append `XML` to the end of a shell command to format the output as XML
++ Command auto-fixin with [thefuck](https://github.com/nvbn/thefuck)
++ Pipe to `copy` to copy text or `paste` to use the clipboard
++ [exa](https://github.com/ogham/exa) aliased to `e`
 
 ## Setup
 
 Run `install/arch.sh` for Arch Linux.
-
-### Manual Setup
-
-Install dependencies then install `oh-my-zsh` and the Tmux Plugin Manager.
-
-#### oh-my-zsh
-[Full documentation here.](https://github.com/robbyrussell/oh-my-zsh)
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-```
-
-#### Tmux Plugin Manager
-[Full documentation here.](https://github.com/tmux-plugins/tpm)
-```bash
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-```
 
 ### Generating the dotfiles
 Dotfiles are generated using [dot-templater](https://github.com/kesslern/dot-templater).
