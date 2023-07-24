@@ -7,4 +7,4 @@ case $arg in
   *) ;;  # If not, do nothing and retain the original argument
 esac
 
-echo "ibase=16; $arg" | bc
+echo "obase=2; ibase=16; $arg" | bc
