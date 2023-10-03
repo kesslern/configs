@@ -3,6 +3,11 @@ if [ -d "$HOME/.bin" ]; then
     export PATH=$PATH:$HOME/.bin
 fi
 
+# Add ~/.local/bin to the path if it exists
+if [ -d "$HOME/.local/bin" ]; then
+    export PATH=$PATH:$HOME/.local/bin
+fi
+
 # Add ~/.cargo/bin to the path if it exists
 if [ -d "$HOME/.cargo/bin" ]; then
     export PATH=$PATH:$HOME/.cargo/bin
@@ -144,4 +149,3 @@ fi
 if [ -e /usr/bin/kubectl ]; then
     source <(kubectl completion zsh)
 fi
-
