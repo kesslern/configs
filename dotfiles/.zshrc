@@ -62,7 +62,6 @@ if [ "$TERM" = "xterm" ]; then
 fi
 
 [ -f /etc/profile.d/autojump.zsh ] && source /etc/profile.d/autojump.zsh
-source $HOME/.aliasme/aliasme.sh
 source $HOME/.zsh/plugins/bd.zsh
 source $ZSH/oh-my-zsh.sh
 
