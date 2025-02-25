@@ -178,7 +178,7 @@
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)
 
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'rgbds-mode)
 
 (delete-selection-mode 1)
