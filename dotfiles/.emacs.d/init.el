@@ -133,8 +133,7 @@
 ;; Do not bind RET to paredit-RET which prevents input from being
 ;; evaluated on RET in M-:, ielm, etc.
 (with-eval-after-load 'paredit
-  (define-key paredit-mode-map (kbd "RET") nil)
-  (define-key backward-delete-char (kbd "BACKSPACE") nil))
+  (define-key paredit-mode-map (kbd "RET") nil))
 
 
 ;;; Rainbow Delimiters Configuration =================================
