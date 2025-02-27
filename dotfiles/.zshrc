@@ -148,3 +148,15 @@ fi
 if [ -e /usr/bin/kubectl ]; then
     source <(kubectl completion zsh)
 fi
+
+swap_files() {
+    if [ $# -ne 2 ]; then
+        echo "Usage: swap_files file1 file2"
+        return 1
+    fi
+
+    tmpfile=$(mktemp $(dirname "$1")/XXXXXX)
+    mv "$1" "$tmpfile" && mv "$2" "$1" && mv "$tmpfile" "$2"
+}
+
+alias nps="cat package.json|jq .scripts"
