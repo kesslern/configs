@@ -1,23 +1,17 @@
 #!/bin/bash
 
 echo "Installing dependencies..."
-sudo pacman -S --noconfirm \
+sudo dnf install -y \
   adobe-source-code-pro-fonts \
   emacs \
-  eza \
   fzf \
-  lesspipe \
   libxml2 \
-  noto-fonts-emoji \
-  python \
+  google-noto-emoji-fonts \
+  python3 \
   tmux \
-  ttf-cascadia-code \
+  cascadia-code-fonts \
   xclip \
   zsh \
-|| exit 1
-
-yay -S --noconfirm \
-  autojump \
 || exit 1
 
 echo "Installing oh-my-zsh..."
@@ -36,5 +30,5 @@ else
   || exit 1
 fi
 
-systemctl enable --user emacs
-systemctl start --user emacs
+systemctl --user enable emacs
+systemctl --user start emacs
