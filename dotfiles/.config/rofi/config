@@ -1,4 +1,0 @@
-rofi.modi: window,run,combi
-rofi.font: ROFI_FONT
-rofi.theme: solarized
-rofi.show-icons: true
