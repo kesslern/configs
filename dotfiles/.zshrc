@@ -61,7 +61,6 @@ if [ "$TERM" = "xterm" ]; then
     export TERM=xterm-256color
 fi
 
-[ -f /etc/profile.d/autojump.zsh ] && source /etc/profile.d/autojump.zsh
 source $HOME/.zsh/plugins/bd.zsh
 source $ZSH/oh-my-zsh.sh
 
@@ -74,6 +73,10 @@ command_exists () {
 setopt hist_ignore_all_dups # Ignore duplicate history options
 setopt hist_ignore_space    # Ignore commands that start with a space
 unsetopt share_history      # Prevent sharing history between active sessions
+
+if command_exists zoxide; then
+    eval "$(zoxide init zsh)"
+fi
 
 # Increase zsh history length
 export SAVEHIST=50000
@@ -97,9 +100,8 @@ if command_exists icdiff; then
     alias diff=icdiff
 fi
 
-# Use icdiff for diff where available
-if command_exists exa; then
-    alias e=exa
+if command_exists eza; then
+    alias e=eza
 fi
 
 # Source gcloud autocompletes if they exist
@@ -132,6 +134,8 @@ alias -g copy="$COPY"
 alias -g COPY="| $COPY"
 
 alias -g npm="nocorrect npm"
+alias -g pn="nocorrect pnpm"
+alias nps="cat package.json|jq .scripts"
 
 if command_exists lesspipe.sh; then
     export LESSOPEN="|lesspipe.sh %s"
@@ -141,9 +145,6 @@ if ! command_exists open; then
    alias open="xdg-open"
 fi
 
-if [ -e /usr/share/nvm/init-nvm.sh ]; then
-    source /usr/share/nvm/init-nvm.sh
-fi
 
 if [ -e /usr/bin/kubectl ]; then
     source <(kubectl completion zsh)
@@ -158,5 +159,3 @@ swap_files() {
     tmpfile=$(mktemp $(dirname "$1")/XXXXXX)
     mv "$1" "$tmpfile" && mv "$2" "$1" && mv "$tmpfile" "$2"
 }
-
-alias nps="cat package.json|jq .scripts"
