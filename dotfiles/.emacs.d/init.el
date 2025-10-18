@@ -37,8 +37,7 @@
 
 ;; Disable unneeded UI elements
 (when (display-graphic-p)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1))
+  (tool-bar-mode -1))
 
 (setq inhibit-startup-screen t)
 (column-number-mode 1)
@@ -134,13 +133,8 @@
 ;;; Key Bindings & Commands
 ;; -------------------------------------------------------------------
 
-(defun show-current-time ()
-  "Display current time in minibuffer."
-  (interactive)
-  (message (current-time-string)))
 
-(global-set-key (kbd "C-c t") 'show-current-time)
-(global-set-key (kbd "C-c d") 'delete-trailing-whitespace)
+(global-set-key (kbd "M-o") 'other-window)
 
 ;; -------------------------------------------------------------------
 ;;; Server Mode
@@ -150,6 +144,27 @@
   :config
   (unless (server-running-p)
     (server-start)))
+
+;; -------------------------------------------------------------------
+;;; Magit Setup
+;; -------------------------------------------------------------------
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)     ; Most common entry point
+         ("C-x M-g" . magit-dispatch)) ; Quick command dispatch
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (magit-diff-refine-hunk 'all) ; highlight word-level diffs
+  (magit-save-repository-buffers 'dontask) ; don’t prompt to save files
+  (magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))) ; show avatars if available
+
+(use-package diff-hl
+  :ensure t
+  :hook ((prog-mode . diff-hl-mode)
+         (text-mode . diff-hl-mode)
+         (magit-pre-refresh . diff-hl-magit-pre-refresh)
+         (magit-post-refresh . diff-hl-magit-post-refresh)))
 
 ;; -------------------------------------------------------------------
 ;;; Development Tools
