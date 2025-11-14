@@ -90,11 +90,6 @@ fi
 
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# Initiate 'thefuck'
-if command_exists thefuck; then
-    eval $(thefuck --alias)
-fi
-
 # Use icdiff for diff where available
 if command_exists icdiff; then
     alias diff=icdiff
@@ -146,9 +141,11 @@ if ! command_exists open; then
 fi
 
 
-if [ -e /usr/bin/kubectl ]; then
-    source <(kubectl completion zsh)
+if [ -e /usr/share/zsh/plugins/pnpm-shell-completion/pnpm-shell-completion.zsh ]; then
+    source /usr/share/zsh/plugins/pnpm-shell-completion/pnpm-shell-completion.zsh
 fi
+
+
 
 swap_files() {
     if [ $# -ne 2 ]; then
@@ -159,3 +156,5 @@ swap_files() {
     tmpfile=$(mktemp $(dirname "$1")/XXXXXX)
     mv "$1" "$tmpfile" && mv "$2" "$1" && mv "$tmpfile" "$2"
 }
+
+export VOLTA_FEATURE_PNPM=1
