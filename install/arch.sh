@@ -13,11 +13,8 @@ sudo pacman -S --noconfirm \
   tmux \
   ttf-cascadia-code \
   xclip \
+  zoxide \
   zsh \
-|| exit 1
-
-yay -S --noconfirm \
-  autojump \
 || exit 1
 
 echo "Installing oh-my-zsh..."
