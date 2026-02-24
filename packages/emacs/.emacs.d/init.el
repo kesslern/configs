@@ -1,50 +1,65 @@
-;;; init.el --- Modern Emacs Config inspired by Emfy <https://github.com/susam/emfy>
+;;; init.el --- Modern Emacs 30 Native Config -*-
 
 ;;; Commentary:
-;; A minimal, modern, and maintainable Emacs setup.
+;; Single-file, minimal, modern Emacs 30 config using built-in features.
 
 ;;; Code:
 
 ;; -------------------------------------------------------------------
-;;; Startup Performance Tweaks
+;;; Early-init behavior (inlined)
 ;; -------------------------------------------------------------------
 
-(setq gc-cons-threshold (* 50 1000 1000))
+(setq gc-cons-threshold most-positive-fixnum)
+(setq package-enable-at-startup nil)
+
+;; -------------------------------------------------------------------
+;;; Startup Performance
+;; -------------------------------------------------------------------
+
 (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
+(defun my/minibuffer-setup ()
+  (setq gc-cons-threshold (* 200 1024 1024)))
+
+(defun my/minibuffer-exit ()
+  (setq gc-cons-threshold (* 20 1024 1024)))
+
+(add-hook 'minibuffer-setup-hook #'my/minibuffer-setup)
+(add-hook 'minibuffer-exit-hook #'my/minibuffer-exit)
+
 (add-hook 'emacs-startup-hook
-          (lambda () (setq gc-cons-threshold (* 2 1000 1000))))
+          (lambda ()
+            (setq gc-cons-threshold (* 20 1024 1024))))
 
 ;; -------------------------------------------------------------------
-;;; Package Setup
+;;; Package Setup (built-in + use-package)
 ;; -------------------------------------------------------------------
 
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("gnu"   . "https://elpa.gnu.org/packages/")))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
+(setq package-quickstart t)
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
+
 (require 'use-package)
 (setq use-package-always-ensure t)
 
 ;; -------------------------------------------------------------------
-;;; UI & Look and Feel
+;;; UI & Appearance
 ;; -------------------------------------------------------------------
-
-;; Disable unneeded UI elements
-(when (display-graphic-p)
-  (tool-bar-mode -1))
 
 (setq inhibit-startup-screen t)
 (column-number-mode 1)
-(global-display-line-numbers-mode 0) ;; enabled selectively later
 
-;; Theme and face customization
+(when (display-graphic-p)
+  (tool-bar-mode -1))
+
 (load-theme 'wombat t)
+
 (custom-set-faces
  '(default ((t (:background "#111"))))
  '(cursor ((t (:background "#c96"))))
@@ -52,66 +67,148 @@
  '(isearch ((t (:background "#ff0" :foreground "#000"))))
  '(lazy-highlight ((t (:background "#990" :foreground "#000")))))
 
-;; Highlight matching parens
-(setq show-paren-delay 0)
 (show-paren-mode 1)
+(setq show-paren-delay 0)
 
-;; Enable mouse in terminal
 (xterm-mouse-mode 1)
 
-;; Scroll to top/bottom error
-(setq scroll-error-top-bottom t)
+;; Smooth scrolling (modern Emacs)
+(pixel-scroll-precision-mode 1)
+(setq scroll-conservatively 101
+      scroll-margin 2
+      scroll-error-top-bottom t)
 
-;; Smarter line navigation
+;; -------------------------------------------------------------------
+;;; Completion (modern stack)
+;; -------------------------------------------------------------------
+
+(use-package vertico
+  :init (vertico-mode))
+
+(use-package orderless
+  :custom (completion-styles '(orderless basic)))
+
+(use-package marginalia
+  :init (marginalia-mode))
+
+;; -------------------------------------------------------------------
+;;; Editing Behavior
+;; -------------------------------------------------------------------
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
+(setq c-basic-offset 4
+      js-indent-level 2
+      css-indent-offset 2)
+
+(setq sentence-end-double-space nil)
+(setq require-final-newline t)
+
+(delete-selection-mode 1)
+(save-place-mode 1)
+(savehist-mode 1)
+(recentf-mode 1)
+
+(electric-pair-mode 1)
+
+;; Whitespace + line numbers (fixed)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
+(dolist (hook '(prog-mode-hook conf-mode-hook text-mode-hook))
+  (add-hook hook (lambda ()
+                   (setq show-trailing-whitespace t))))
+
+(setq-default indicate-empty-lines t)
+(setq-default indicate-buffer-boundaries 'left)
+
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+
+;; -------------------------------------------------------------------
+;;; Navigation Enhancements
+;; -------------------------------------------------------------------
+
 (use-package mwim
   :bind (("C-a" . mwim-beginning-of-code-or-line)
          ("C-e" . mwim-end-of-code-or-line)
          ("<home>" . mwim-beginning-of-line-or-code)
          ("<end>" . mwim-end-of-line-or-code)))
 
-;; Completion in minibuffer
-(fido-vertical-mode 1)
+(global-set-key (kbd "M-o") #'other-window)
 
 ;; -------------------------------------------------------------------
-;;; Editing Behavior
+;;; Project Management (built-in)
 ;; -------------------------------------------------------------------
 
-;; Use spaces instead of tabs
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq c-basic-offset 4
-      js-indent-level 2
-      css-indent-offset 2)
+(global-set-key (kbd "C-c p") project-prefix-map)
 
-;; Single space ends sentences
-(setq sentence-end-double-space nil)
+;; -------------------------------------------------------------------
+;;; Tree-sitter (built-in)
+;; -------------------------------------------------------------------
 
-;; Newline at end of file
-(setq require-final-newline t)
+(setq treesit-language-source-alist
+      '((python "https://github.com/tree-sitter/tree-sitter-python")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (bash "https://github.com/tree-sitter/tree-sitter-bash")))
 
-;; Show trailing whitespace
-(dolist (hook '(prog-mode-hook conf-mode-hook text-mode-hook))
-  (add-hook hook (lambda () (setq show-trailing-whitespace t)))
-  (add-hook hook #'display-line-numbers-mode))
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)
+        (js-mode . js-ts-mode)
+        (css-mode . css-ts-mode)
+        (json-mode . json-ts-mode)
+        (sh-mode . bash-ts-mode)))
 
-;; Highlight empty lines
-(setq-default indicate-empty-lines t)
-(setq-default indicate-buffer-boundaries 'left)
+;; -------------------------------------------------------------------
+;;; LSP (Eglot - built-in)
+;; -------------------------------------------------------------------
 
-;; Delete trailing whitespace before save
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'prog-mode-hook #'eglot-ensure)
+(setq eglot-autoshutdown t)
 
-;; Replace active selection when typing
-(delete-selection-mode 1)
+;; -------------------------------------------------------------------
+;;; Version Control
+;; -------------------------------------------------------------------
 
-;; Restore cursor position on reopen
-(save-place-mode 1)
+(use-package magit
+  :commands (magit-status magit-dispatch)
+  :bind (("C-x g" . magit-status)
+         ("C-x M-g" . magit-dispatch))
+  :custom
+  (magit-display-buffer-function
+   #'magit-display-buffer-same-window-except-diff-v1)
+  (magit-diff-refine-hunk 'all)
+  (magit-save-repository-buffers 'dontask))
 
-;; Enable persistent minibuffer history
-(savehist-mode 1)
+(use-package diff-hl
+  :hook ((prog-mode text-mode) . diff-hl-mode)
+  :hook (magit-pre-refresh . diff-hl-magit-pre-refresh)
+  :hook (magit-post-refresh . diff-hl-magit-post-refresh))
 
-;; Track recent files
-(recentf-mode 1)
+;; -------------------------------------------------------------------
+;;; Lisp Development
+;; -------------------------------------------------------------------
+
+(use-package paredit
+  :hook ((emacs-lisp-mode
+          eval-expression-minibuffer-setup
+          ielm-mode
+          lisp-mode
+          lisp-interaction-mode) . paredit-mode))
+
+(use-package rainbow-delimiters
+  :hook ((emacs-lisp-mode
+          ielm-mode
+          lisp-mode
+          lisp-interaction-mode) . rainbow-delimiters-mode))
+
+;; -------------------------------------------------------------------
+;;; File Types
+;; -------------------------------------------------------------------
+
+(use-package markdown-mode
+  :mode "\\.md\\'")
 
 ;; -------------------------------------------------------------------
 ;;; Backup & Auto-save
@@ -119,25 +216,19 @@
 
 (setq backup-directory-alist '(("." . "~/.tmp/emacs/backup/")))
 (setq auto-save-file-name-transforms '((".*" "~/.tmp/emacs/auto-save/" t)))
-(setq backup-by-copying t)
-(setq create-lockfiles nil)
+
+(setq backup-by-copying t
+      create-lockfiles nil
+      version-control t
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2)
 
 (make-directory "~/.tmp/emacs/auto-save/" t)
 (make-directory "~/.tmp/emacs/backup/" t)
 
-;; Store customizations separately
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file t)
-
 ;; -------------------------------------------------------------------
-;;; Key Bindings & Commands
-;; -------------------------------------------------------------------
-
-
-(global-set-key (kbd "M-o") 'other-window)
-
-;; -------------------------------------------------------------------
-;;; Server Mode
+;;; Server
 ;; -------------------------------------------------------------------
 
 (use-package server
@@ -146,69 +237,21 @@
     (server-start)))
 
 ;; -------------------------------------------------------------------
-;;; Magit Setup
-;; -------------------------------------------------------------------
-
-(use-package magit
-  :ensure t
-  :bind (("C-x g" . magit-status)     ; Most common entry point
-         ("C-x M-g" . magit-dispatch)) ; Quick command dispatch
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  (magit-diff-refine-hunk 'all) ; highlight word-level diffs
-  (magit-save-repository-buffers 'dontask) ; don’t prompt to save files
-  (magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))) ; show avatars if available
-
-(use-package diff-hl
-  :ensure t
-  :hook ((prog-mode . diff-hl-mode)
-         (text-mode . diff-hl-mode)
-         (magit-pre-refresh . diff-hl-magit-pre-refresh)
-         (magit-post-refresh . diff-hl-magit-post-refresh)))
-
-;; -------------------------------------------------------------------
-;;; Development Tools
-;; -------------------------------------------------------------------
-
-(use-package paredit
-  :hook ((emacs-lisp-mode
-          eval-expression-minibuffer-setup
-          ielm-mode
-          lisp-interaction-mode
-          lisp-mode) . paredit-mode)
-  :config
-  (define-key paredit-mode-map (kbd "RET") nil))
-
-(use-package rainbow-delimiters
-  :hook ((emacs-lisp-mode
-          ielm-mode
-          lisp-interaction-mode
-          lisp-mode) . rainbow-delimiters-mode)
-  :config
-  (set-face-foreground 'rainbow-delimiters-depth-1-face "#c66")
-  (set-face-foreground 'rainbow-delimiters-depth-2-face "#6c6")
-  (set-face-foreground 'rainbow-delimiters-depth-3-face "#69f")
-  (set-face-foreground 'rainbow-delimiters-depth-4-face "#cc6")
-  (set-face-foreground 'rainbow-delimiters-depth-5-face "#6cc")
-  (set-face-foreground 'rainbow-delimiters-depth-6-face "#c6c")
-  (set-face-foreground 'rainbow-delimiters-depth-7-face "#ccc")
-  (set-face-foreground 'rainbow-delimiters-depth-8-face "#999")
-  (set-face-foreground 'rainbow-delimiters-depth-9-face "#666"))
-
-(use-package markdown-mode
-  :mode ("\\.md\\'" . markdown-mode))
-
-;; -------------------------------------------------------------------
-;;; Load Local Lisp Packages (Optional)
+;;; Local Lisp
 ;; -------------------------------------------------------------------
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
 (use-package rgbds-mode
   :load-path "lisp"
-  :mode ("\\.asm\\'" . rgbds-mode))
+  :mode "\\.asm\\'")
 
-;;; End of File
+;; -------------------------------------------------------------------
+;;; Custom file
+;; -------------------------------------------------------------------
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file t)
+
 (provide 'init)
-
 ;;; init.el ends here
