@@ -168,6 +168,33 @@
 (setq eglot-autoshutdown t)
 
 ;; -------------------------------------------------------------------
+;;; Copilot (AI completion)
+;; -------------------------------------------------------------------
+
+(use-package copilot
+  :ensure t
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . copilot-accept-completion)
+              ("TAB" . copilot-accept-completion)
+              ("C-TAB" . copilot-accept-completion-by-word)
+              ("C-<tab>" . copilot-accept-completion-by-word)))
+
+(setq copilot-idle-delay 0.2)
+(setq copilot-max-char -1)
+(define-key copilot-completion-map (kbd "C-<return>") #'copilot-accept-completion)
+
+(defun my/copilot-disable-p ()
+  (or (derived-mode-p 'emacs-lisp-mode)
+      (derived-mode-p 'org-mode)
+      (derived-mode-p 'shell-mode)))
+
+(add-hook 'copilot-mode-hook
+          (lambda ()
+            (when (my/copilot-disable-p)
+              (copilot-mode -1))))
+
+;; -------------------------------------------------------------------
 ;;; Version Control
 ;; -------------------------------------------------------------------
 
