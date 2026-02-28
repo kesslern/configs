@@ -23,11 +23,6 @@ if [ -d "$HOME/go/bin" ]; then
     export PATH=$PATH:$HOME/go/bin
 fi
 
-# Source the bash_profile if it exists
-if [ -f $HOME/.bash_profile ]; then
-    source $HOME/.bash_profile
-fi
-
 if [ -f $HOME/.cargo/bin ]; then
     source $HOME/.cargo/bin
 fi
