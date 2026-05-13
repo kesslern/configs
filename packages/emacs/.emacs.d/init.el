@@ -13,6 +13,44 @@
 (setq package-enable-at-startup nil)
 
 ;; -------------------------------------------------------------------
+;;; XDG Directory Setup (keep stow directory clean)
+;; -------------------------------------------------------------------
+
+(defvar my/emacs-cache-dir
+  (expand-file-name "emacs/" (or (getenv "XDG_CACHE_HOME") "~/.cache"))
+  "Directory for Emacs cache files.")
+
+(defvar my/emacs-data-dir
+  (expand-file-name "emacs/" (or (getenv "XDG_DATA_HOME") "~/.local/share"))
+  "Directory for Emacs data files.")
+
+(unless (file-exists-p my/emacs-cache-dir)
+  (make-directory my/emacs-cache-dir t))
+
+(unless (file-exists-p my/emacs-data-dir)
+  (make-directory my/emacs-data-dir t))
+
+;; Redirect auto-save and backup files
+(setq auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "auto-save/" my/emacs-cache-dir) t)))
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups/" my/emacs-cache-dir))))
+
+;; Redirect package installation
+(setq package-user-dir (expand-file-name "elpa/" my/emacs-data-dir))
+
+;; Redirect native-comp cache
+(when (fboundp 'startup-redirect-eln-cache)
+  (startup-redirect-eln-cache
+   (expand-file-name "eln-cache/" my/emacs-cache-dir)))
+
+;; Redirect other ephemeral files (configured later with their modes)
+(setq custom-file (expand-file-name "custom.el" my/emacs-cache-dir))
+(setq savehist-file (expand-file-name "history" my/emacs-data-dir))
+(setq save-place-file (expand-file-name "places" my/emacs-data-dir))
+(setq recentf-save-file (expand-file-name "recentf" my/emacs-data-dir))
+
+;; -------------------------------------------------------------------
 ;;; Startup Performance
 ;; -------------------------------------------------------------------
 
@@ -166,6 +204,14 @@
 
 (add-hook 'prog-mode-hook #'eglot-ensure)
 (setq eglot-autoshutdown t)
+
+;; -------------------------------------------------------------------
+;;; Rust
+;; -------------------------------------------------------------------
+
+(use-package rust-mode
+  :init
+  (setq rust-mode-treesitter-derive t))
 
 ;; -------------------------------------------------------------------
 ;;; Version Control

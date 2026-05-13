@@ -1,0 +1,11 @@
+# Auto-generated files
+auto-save-list/
+elpa/
+eln-cache/
+recentf
+history
+places
+custom.el
+package-quickstart.el
+package-quickstart.elc
+*.sync-conflict*
