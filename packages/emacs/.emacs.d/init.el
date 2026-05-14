@@ -132,14 +132,54 @@
 ;;; Completion (modern stack)
 ;; -------------------------------------------------------------------
 
+;; Minibuffer completion
 (use-package vertico
-  :init (vertico-mode))
+  :init
+  (vertico-mode))
 
 (use-package orderless
-  :custom (completion-styles '(orderless basic)))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides
+   '((file (styles partial-completion)))))
 
 (use-package marginalia
-  :init (marginalia-mode))
+  :init
+  (marginalia-mode))
+
+;; In-buffer completion popup
+(use-package corfu
+  :init
+  (global-corfu-mode)
+  (corfu-history-mode)
+  (corfu-popupinfo-mode)
+
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.1)
+  (corfu-auto-prefix 2)
+  (corfu-cycle t)
+  (corfu-preview-current nil)
+  (corfu-preselect 'prompt)
+
+  ;; Better TAB behavior
+  (tab-always-indent 'complete)
+
+  :bind
+  (:map corfu-map
+        ("TAB" . corfu-next)
+        ([tab] . corfu-next)
+        ("S-TAB" . corfu-previous)
+        ([backtab] . corfu-previous)
+        ("RET" . corfu-insert)))
+
+;; Extra completion backends
+(use-package cape
+  :init
+  ;; Add useful completion-at-point functions
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
 
 ;; -------------------------------------------------------------------
 ;;; Editing Behavior
@@ -219,17 +259,33 @@
   :hook ((python-ts-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
          (css-ts-mode . eglot-ensure)
-         (rust-mode . eglot-ensure))
+         (rust-ts-mode . eglot-ensure))
+
   :custom
-  (eglot-autoshutdown t))
+  (eglot-autoshutdown t)
+
+  :config
+  ;; Rust analyzer tweaks
+  (add-to-list 'eglot-server-programs
+               '(rust-ts-mode . ("rust-analyzer"))))
+
+(setq eldoc-echo-area-use-multiline-p nil)
 
 ;; -------------------------------------------------------------------
 ;;; Rust
 ;; -------------------------------------------------------------------
 
 (use-package rust-mode
-  :init
-  (setq rust-mode-treesitter-derive t))
+  :mode "\\.rs\\'")
+
+(add-to-list 'major-mode-remap-alist
+             '(rust-mode . rust-ts-mode))
+
+(use-package flymake
+  :ensure nil)
+
+(use-package cargo
+  :hook (rust-ts-mode . cargo-minor-mode))
 
 ;; -------------------------------------------------------------------
 ;;; Version Control
