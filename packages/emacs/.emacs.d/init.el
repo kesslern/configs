@@ -13,7 +13,7 @@
 (setq package-enable-at-startup nil)
 
 ;; -------------------------------------------------------------------
-;;; XDG Directory Setup (keep stow directory clean)
+;;; XDG Directory Setup
 ;; -------------------------------------------------------------------
 
 (defvar my/emacs-cache-dir
@@ -49,6 +49,14 @@
 (setq savehist-file (expand-file-name "history" my/emacs-data-dir))
 (setq save-place-file (expand-file-name "places" my/emacs-data-dir))
 (setq recentf-save-file (expand-file-name "recentf" my/emacs-data-dir))
+(setq recentf-exclude
+      (list
+       (expand-file-name "eln-cache/" my/emacs-cache-dir)
+       (expand-file-name "auto-save/" my/emacs-cache-dir)
+       (expand-file-name "backups/" my/emacs-cache-dir)))
+
+(make-directory (expand-file-name "auto-save/" my/emacs-cache-dir) t)
+(make-directory (expand-file-name "backups/" my/emacs-cache-dir) t)
 
 ;; -------------------------------------------------------------------
 ;;; Startup Performance
@@ -115,6 +123,10 @@
 (setq scroll-conservatively 101
       scroll-margin 2
       scroll-error-top-bottom t)
+
+;; which-key
+(use-package which-key
+  :init (which-key-mode))
 
 ;; -------------------------------------------------------------------
 ;;; Completion (modern stack)
@@ -189,7 +201,8 @@
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (json "https://github.com/tree-sitter/tree-sitter-json")
-        (bash "https://github.com/tree-sitter/tree-sitter-bash")))
+        (bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")))
 
 (setq major-mode-remap-alist
       '((python-mode . python-ts-mode)
@@ -202,8 +215,13 @@
 ;;; LSP (Eglot - built-in)
 ;; -------------------------------------------------------------------
 
-(add-hook 'prog-mode-hook #'eglot-ensure)
-(setq eglot-autoshutdown t)
+(use-package eglot
+  :hook ((python-ts-mode . eglot-ensure)
+         (js-ts-mode . eglot-ensure)
+         (css-ts-mode . eglot-ensure)
+         (rust-mode . eglot-ensure))
+  :custom
+  (eglot-autoshutdown t))
 
 ;; -------------------------------------------------------------------
 ;;; Rust
@@ -257,23 +275,6 @@
   :mode "\\.md\\'")
 
 ;; -------------------------------------------------------------------
-;;; Backup & Auto-save
-;; -------------------------------------------------------------------
-
-(setq backup-directory-alist '(("." . "~/.tmp/emacs/backup/")))
-(setq auto-save-file-name-transforms '((".*" "~/.tmp/emacs/auto-save/" t)))
-
-(setq backup-by-copying t
-      create-lockfiles nil
-      version-control t
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2)
-
-(make-directory "~/.tmp/emacs/auto-save/" t)
-(make-directory "~/.tmp/emacs/backup/" t)
-
-;; -------------------------------------------------------------------
 ;;; Server
 ;; -------------------------------------------------------------------
 
@@ -292,12 +293,6 @@
   :load-path "lisp"
   :mode "\\.asm\\'")
 
-;; -------------------------------------------------------------------
-;;; Custom file
-;; -------------------------------------------------------------------
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file t)
-
 (provide 'init)
 ;;; init.el ends here
