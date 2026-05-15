@@ -266,6 +266,7 @@
 ;; -------------------------------------------------------------------
 
 (use-package eglot
+  :ensure nil
   :hook ((python-ts-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
          (css-ts-mode . eglot-ensure)
@@ -290,9 +291,6 @@
 
 (add-to-list 'major-mode-remap-alist
              '(rust-mode . rust-ts-mode))
-
-(use-package flymake
-  :ensure nil)
 
 (use-package cargo
   :hook (rust-ts-mode . cargo-minor-mode))
@@ -345,6 +343,7 @@
 ;; -------------------------------------------------------------------
 
 (use-package server
+  :ensure nil
   :config
   (unless (server-running-p)
     (server-start)))
