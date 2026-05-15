@@ -205,7 +205,11 @@
 (setq-default indicate-empty-lines t)
 (setq-default indicate-buffer-boundaries 'left)
 
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook
+                      #'delete-trailing-whitespace
+                      nil t)))
 
 ;; -------------------------------------------------------------------
 ;;; Navigation Enhancements
