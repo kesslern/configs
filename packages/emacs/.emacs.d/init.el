@@ -106,13 +106,6 @@
 
 (load-theme 'wombat t)
 
-(custom-set-faces
- '(default ((t (:background "#111"))))
- '(cursor ((t (:background "#c96"))))
- '(font-lock-comment-face ((t (:foreground "#fc0"))))
- '(isearch ((t (:background "#ff0" :foreground "#000"))))
- '(lazy-highlight ((t (:background "#990" :foreground "#000")))))
-
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
