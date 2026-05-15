@@ -83,7 +83,9 @@
 
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+
 (setq package-quickstart t)
 (package-initialize)
 
@@ -103,8 +105,6 @@
 
 (when (display-graphic-p)
   (tool-bar-mode -1))
-
-(load-theme 'wombat t)
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
@@ -145,8 +145,13 @@
 (use-package corfu
   :init
   (global-corfu-mode)
+
+  ;; Enable history mode
   (corfu-history-mode)
-  (corfu-popupinfo-mode)
+
+  ;; Only enable popup info in GUI
+  (when (display-graphic-p)
+    (corfu-popupinfo-mode))
 
   :custom
   (corfu-auto t)
@@ -156,7 +161,9 @@
   (corfu-preview-current nil)
   (corfu-preselect 'prompt)
 
-  ;; Better TAB behavior
+  ;; REQUIRED for terminal Emacs sometimes
+  (corfu-quit-no-match 'separator)
+
   (tab-always-indent 'complete)
 
   :bind
@@ -166,6 +173,12 @@
         ("S-TAB" . corfu-previous)
         ([backtab] . corfu-previous)
         ("RET" . corfu-insert)))
+
+(use-package corfu-terminal
+  :if (not (display-graphic-p))
+  :after corfu
+  :config
+  (corfu-terminal-mode +1))
 
 ;; Extra completion backends
 (use-package cape
