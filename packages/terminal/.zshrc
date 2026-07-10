@@ -23,10 +23,6 @@ if [ -d "$HOME/go/bin" ]; then
     export PATH=$PATH:$HOME/go/bin
 fi
 
-if [ -f $HOME/.cargo/bin ]; then
-    source $HOME/.cargo/bin
-fi
-
 # Path to oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
