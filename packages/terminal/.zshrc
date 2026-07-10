@@ -99,13 +99,6 @@ if [ -d "/opt/google-cloud-sdk/completion.zsh.inc" ]; then
     source /opt/google-cloud-sdk/completion.zsh.inc
 fi
 
-# Alias editor commands to emacs wrapper if available
-if command_exists ew; then
-    alias nano=ew
-    alias emacs=ew
-    export EDITOR=ew
-fi
-
 # Aliases to format pretty-print JSON and XML
 alias -g JSON='| python -m json.tool'
 alias -g XML='| xmllint --format -'

@@ -5,7 +5,6 @@ Use a script in `install/` to set up dependencies.
 
 ## Features
 + Fuzzy shell history search with `fzf`
-+ emacs wrapper script aliased to `ew` and `nano`
 + tmux plugin manager setup
 
 ### Shell Aliases
