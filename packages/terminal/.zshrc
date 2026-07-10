@@ -91,7 +91,7 @@ if command_exists eza; then
 fi
 
 # Source gcloud autocompletes if they exist
-if [ -d "/opt/google-cloud-sdk/completion.zsh.inc" ]; then
+if [ -f "/opt/google-cloud-sdk/completion.zsh.inc" ]; then
     source /opt/google-cloud-sdk/completion.zsh.inc
 fi
 
