@@ -200,11 +200,9 @@
   (marginalia-mode 1))
 
 (use-package corfu
-  :init
-  (global-corfu-mode 1)
-
   :hook
-  (corfu-mode . corfu-history-mode)
+  ((prog-mode . corfu-mode)
+   (corfu-mode . corfu-history-mode))
 
   :custom
   (corfu-auto t)
