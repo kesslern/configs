@@ -90,6 +90,13 @@ if command_exists eza; then
     alias e=eza
 fi
 
+# Use emacs (terminal mode) as the editor if available, else nano
+if command_exists emacs; then
+    export EDITOR="emacs -nw"
+else
+    export EDITOR=nano
+fi
+
 # Source gcloud autocompletes if they exist
 if [ -f "/opt/google-cloud-sdk/completion.zsh.inc" ]; then
     source /opt/google-cloud-sdk/completion.zsh.inc
