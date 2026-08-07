@@ -9,13 +9,22 @@ sudo pacman -S --noconfirm \
   lesspipe \
   libxml2 \
   noto-fonts-emoji \
+  nodejs \
+  npm \
   python \
+  python-lsp-server \
+  rust \
+  rust-analyzer \
   tmux \
   ttf-cascadia-code \
+  typescript-language-server \
   xclip \
   zoxide \
   zsh \
 || exit 1
+
+echo "Installing npm-only language servers..."
+npm install -g vscode-langservers-extracted || exit 1
 
 echo "Installing oh-my-zsh..."
 if [ -e ~/.oh-my-zsh ]; then

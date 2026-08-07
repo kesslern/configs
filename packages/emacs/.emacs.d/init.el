@@ -298,6 +298,8 @@
 
   :custom
   (eglot-autoshutdown t)
+  (eglot-workspace-configuration
+   '(:rust-analyzer (:check (:command "clippy"))))
 
   :config
   (add-to-list 'eglot-server-programs
@@ -311,6 +313,11 @@
 
 (use-package cargo
   :hook (rust-ts-mode . cargo-minor-mode))
+
+(defun my/eglot-format-on-save ()
+  (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+
+(add-hook 'rust-ts-mode-hook #'my/eglot-format-on-save)
 
 ;; -------------------------------------------------------------------
 ;;; Version Control

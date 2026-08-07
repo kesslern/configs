@@ -7,12 +7,21 @@ sudo dnf install -y \
   fzf \
   libxml2 \
   google-noto-emoji-fonts \
+  nodejs \
+  npm \
   python3 \
+  python3-python-lsp-server \
+  rust \
+  cargo \
+  rust-analyzer \
   tmux \
   cascadia-code-fonts \
   xclip \
   zsh \
 || exit 1
+
+echo "Installing npm-only language servers..."
+npm install -g typescript-language-server vscode-langservers-extracted || exit 1
 
 echo "Installing oh-my-zsh..."
 if [ -e ~/.oh-my-zsh ]; then
