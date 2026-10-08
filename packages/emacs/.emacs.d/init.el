@@ -154,6 +154,11 @@
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
 
+;; Terminal-style clipboard keys, alongside the usual M-w / C-y / C-w.
+(global-set-key (kbd "C-S-c") #'kill-ring-save)
+(global-set-key (kbd "C-S-v") #'yank)
+(global-set-key (kbd "C-S-x") #'kill-region)
+
 ;; -------------------------------------------------------------------
 ;;; Whitespace / Line Numbers
 ;; -------------------------------------------------------------------
@@ -216,15 +221,18 @@
   (tab-always-indent 'complete)
 
   :config
-  (when (display-graphic-p)
+  ;; Emacs 31+ supports child frames on TTYs, so popupinfo works there too.
+  (when (or (display-graphic-p) (>= emacs-major-version 31))
     (add-hook 'corfu-mode-hook
               #'corfu-popupinfo-mode)))
 
-(use-package corfu-terminal
-  :if (not (display-graphic-p))
-  :after corfu
-  :config
-  (corfu-terminal-mode 1))
+;; Only needed before Emacs 31, which renders Corfu's child frames on TTYs.
+(when (< emacs-major-version 31)
+  (use-package corfu-terminal
+    :if (not (display-graphic-p))
+    :after corfu
+    :config
+    (corfu-terminal-mode 1)))
 
 (use-package cape
   :init
@@ -367,6 +375,23 @@
 
 (use-package markdown-mode
   :mode "\\.md\\'")
+
+(use-package org
+  :ensure nil
+  :preface
+  (defun my/org-latex-preview-setup ()
+    "Render LaTeX fragments now and as they are edited, when images can be shown."
+    (when (display-graphic-p)
+      (org-latex-preview '(16))
+      (org-fragtog-mode 1)))
+  :hook (org-mode . my/org-latex-preview-setup)
+  :custom
+  (org-pretty-entities t)
+  (org-highlight-latex-and-related '(native script entities)))
+
+;; Shows a fragment's source while point is inside it, re-renders on leaving.
+(use-package org-fragtog
+  :commands org-fragtog-mode)
 
 ;; -------------------------------------------------------------------
 ;;; Server
