@@ -93,6 +93,7 @@ fi
 # Use emacs (terminal mode) as the editor if available, else nano
 if command_exists emacs; then
     export EDITOR="emacs -nw"
+    alias emacs="emacs -nw"
 else
     export EDITOR=nano
 fi

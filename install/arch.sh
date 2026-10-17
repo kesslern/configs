@@ -15,6 +15,13 @@ sudo pacman -S --noconfirm \
   python-lsp-server \
   rust \
   rust-analyzer \
+  texlive-basic \
+  texlive-binextra \
+  texlive-latex \
+  texlive-latexextra \
+  texlive-latexrecommended \
+  texlive-mathscience \
+  texlive-plaingeneric \
   tmux \
   ttf-cascadia-code \
   typescript-language-server \

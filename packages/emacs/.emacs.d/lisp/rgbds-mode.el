@@ -35,15 +35,18 @@
   prog-mode
   "RGBDS"
   "Major mode for Gameboy assembly, to be assembled with rgbasm."
-  (setq font-lock-defaults '(rgbds-font-lock-keywords))
+  ;; Keyword args must precede the body, or they're evaluated as body forms.
   :syntax-table (let ((st (make-syntax-table)))
                   (modify-syntax-entry ?_ "w" st)
-                  (modify-syntax-entry ?#"w" st)
+                  (modify-syntax-entry ?# "w" st)
                   (modify-syntax-entry ?. "w" st)
                   (modify-syntax-entry ?\; "<" st)
                   (modify-syntax-entry ?\n ">" st)
                   (modify-syntax-entry ?\t "-" st)
-                  st))
+                  st)
+  (setq font-lock-defaults '(rgbds-font-lock-keywords))
+  (setq-local comment-start ";")
+  (setq-local comment-end ""))
 
 (define-key rgbds-mode-map (kbd "C-j") 'newline-and-indent)
 (define-key rgbds-mode-map (kbd "RET") 'newline-and-indent)

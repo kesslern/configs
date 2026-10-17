@@ -1,7 +1,7 @@
-;;; init.el --- Modern Emacs 30 Config -*- lexical-binding: t; -*-
+;;; init.el --- Modern Emacs 31 Config -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; Minimal, modern Emacs 30 configuration using built-in features
+;; Minimal, modern Emacs 31 configuration using built-in features
 ;; and a small set of focused packages.
 
 ;;; Code:
@@ -30,8 +30,11 @@
 (setq package-user-dir
       (expand-file-name "elpa/" my/data-dir))
 
+(setq package-quickstart-file
+      (expand-file-name "package-quickstart.el" my/cache-dir))
+
 (setq custom-file
-      (expand-file-name "custom.el" my/cache-dir))
+      (expand-file-name "custom.el" my/data-dir))
 
 (setq savehist-file
       (expand-file-name "history" my/data-dir))
@@ -41,6 +44,25 @@
 
 (setq recentf-save-file
       (expand-file-name "recentf" my/data-dir))
+
+(setq project-list-file
+      (expand-file-name "projects" my/data-dir))
+
+(setq tramp-persistency-file-name
+      (expand-file-name "tramp" my/data-dir))
+
+(setq transient-history-file
+      (expand-file-name "transient/history.el" my/data-dir)
+      transient-levels-file
+      (expand-file-name "transient/levels.el" my/data-dir)
+      transient-values-file
+      (expand-file-name "transient/values.el" my/data-dir))
+
+(defvar my/treesit-dir
+  (expand-file-name "tree-sitter/" my/data-dir)
+  "Directory that `my/install-treesit-grammars' installs grammars into.")
+
+(setq treesit-extra-load-path (list my/treesit-dir))
 
 ;; Auto-save / backups
 
@@ -56,6 +78,9 @@
 (setq auto-save-file-name-transforms
       `((".*" ,my/auto-save-dir t)))
 
+(setq auto-save-list-file-prefix
+      (expand-file-name "auto-save-list/.saves-" my/cache-dir))
+
 (setq backup-directory-alist
       `(("." . ,my/backup-dir)))
 
@@ -64,11 +89,7 @@
       kept-new-versions 10
       kept-old-versions 5)
 
-;; Native compilation cache
-
-(when (fboundp 'startup-redirect-eln-cache)
-  (startup-redirect-eln-cache
-   (expand-file-name "eln-cache/" my/cache-dir)))
+;; Native compilation (the eln-cache is redirected in early-init.el)
 
 (setq native-comp-async-report-warnings-errors nil)
 
@@ -87,8 +108,11 @@
 
 (setq read-process-output-max (* 4 1024 1024))
 
-(setq gc-cons-threshold (* 64 1024 1024))
-(setq gc-cons-percentage 0.1)
+;; early-init.el disables GC for startup; restore it once init is done.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 64 1024 1024)
+                  gc-cons-percentage 0.1)))
 
 (defun my/minibuffer-setup ()
   (setq gc-cons-threshold (* 128 1024 1024)))
@@ -150,9 +174,13 @@
 (setq-default indicate-empty-lines t)
 (setq-default indicate-buffer-boundaries 'left)
 
-(when (display-graphic-p)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1))
+;; Dark theme with a full palette, so GUI frames don't fall back to
+;; Emacs' default black foreground. Built in since Emacs 28.
+(setq modus-themes-common-palette-overrides
+      '((bg-main "#111111")
+        (cursor "#cc9966")
+        (comment "#ffcc00")))
+(load-theme 'modus-vivendi t)
 
 ;; Terminal-style clipboard keys, alongside the usual M-w / C-y / C-w.
 (global-set-key (kbd "C-S-c") #'kill-ring-save)
@@ -165,15 +193,15 @@
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (setq show-trailing-whitespace t)))
+;; Only in code and config buffers: in Markdown, trailing double spaces
+;; are hard line breaks.
+(defun my/trailing-whitespace-setup ()
+  "Show trailing whitespace and strip it on save in this buffer."
+  (setq show-trailing-whitespace t)
+  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
 
-(add-hook 'conf-mode-hook
-          (lambda ()
-            (setq show-trailing-whitespace t)))
-
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'prog-mode-hook #'my/trailing-whitespace-setup)
+(add-hook 'conf-mode-hook #'my/trailing-whitespace-setup)
 
 ;; -------------------------------------------------------------------
 ;;; which-key
@@ -236,8 +264,43 @@
 
 (use-package cape
   :init
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+  ;; `add-hook' sets the global value even if the current buffer has a
+  ;; local one, and prepends, so the last one added is tried first.
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
+
+;; -------------------------------------------------------------------
+;;; IDE-style TAB / Shift-TAB indentation
+;; -------------------------------------------------------------------
+
+(defun my/shift-region (columns)
+  "Rigidly shift every line starting in the region by COLUMNS, keeping it active.
+A region ending at the start of a line leaves that line alone."
+  (let ((deactivate-mark nil))
+    (indent-rigidly (region-beginning) (region-end) columns)
+    (setq deactivate-mark nil)))
+
+(defun my/indent-dwim (&optional arg)
+  "Shift the active region right by `tab-width'; otherwise normal TAB.
+With no region this calls `indent-for-tab-command', so
+`tab-always-indent' (indent-then-complete) still applies."
+  (interactive "P")
+  (if (use-region-p)
+      (my/shift-region tab-width)
+    (indent-for-tab-command arg)))
+
+(defun my/outdent-dwim ()
+  "Shift the active region, or the current line, left by `tab-width'."
+  (interactive)
+  (if (use-region-p)
+      (my/shift-region (- tab-width))
+    (indent-rigidly (line-beginning-position) (line-end-position)
+                    (- tab-width))))
+
+(dolist (key '("TAB" "<tab>"))
+  (define-key prog-mode-map (kbd key) #'my/indent-dwim))
+(dolist (key '("<backtab>" "S-TAB" "S-<tab>"))
+  (define-key prog-mode-map (kbd key) #'my/outdent-dwim))
 
 ;; -------------------------------------------------------------------
 ;;; Navigation
@@ -277,18 +340,18 @@
       '((python-mode . python-ts-mode)
         (css-mode . css-ts-mode)
         (js-mode . js-ts-mode)
-        (json-mode . json-ts-mode)
+        (js-json-mode . json-ts-mode)
         (sh-mode . bash-ts-mode)
         (typescript-mode . typescript-ts-mode)
         (rust-mode . rust-ts-mode)))
 
 (defun my/install-treesit-grammars ()
-  "Install missing tree-sitter grammars."
+  "Install missing tree-sitter grammars into `my/treesit-dir'."
   (interactive)
   (dolist (grammar
            '(bash css javascript json python rust toml tsx typescript yaml))
     (unless (treesit-language-available-p grammar)
-      (treesit-install-language-grammar grammar))))
+      (treesit-install-language-grammar grammar my/treesit-dir))))
 
 ;; -------------------------------------------------------------------
 ;;; Eglot
@@ -307,11 +370,7 @@
   :custom
   (eglot-autoshutdown t)
   (eglot-workspace-configuration
-   '(:rust-analyzer (:check (:command "clippy"))))
-
-  :config
-  (add-to-list 'eglot-server-programs
-               '(rust-ts-mode . ("rust-analyzer"))))
+   '(:rust-analyzer (:check (:command "clippy")))))
 
 (setq eldoc-echo-area-use-multiline-p nil)
 
@@ -322,10 +381,14 @@
 (use-package cargo
   :hook (rust-ts-mode . cargo-minor-mode))
 
+;; Only while eglot manages the buffer: with no server connected,
+;; `eglot-format-buffer' errors and that aborts the save.
 (defun my/eglot-format-on-save ()
-  (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+  (if (and (eglot-managed-p) (derived-mode-p 'rust-ts-mode))
+      (add-hook 'before-save-hook #'eglot-format-buffer nil t)
+    (remove-hook 'before-save-hook #'eglot-format-buffer t)))
 
-(add-hook 'rust-ts-mode-hook #'my/eglot-format-on-save)
+(add-hook 'eglot-managed-mode-hook #'my/eglot-format-on-save)
 
 ;; -------------------------------------------------------------------
 ;;; Version Control
@@ -348,7 +411,13 @@
   :hook ((prog-mode . diff-hl-mode)
          (text-mode . diff-hl-mode)
          (magit-pre-refresh . diff-hl-magit-pre-refresh)
-         (magit-post-refresh . diff-hl-magit-post-refresh)))
+         (magit-post-refresh . diff-hl-magit-post-refresh)
+         (diff-hl-mode . my/diff-hl-use-margin-on-tty)))
+
+;; Terminal frames have no fringe, so show diff-hl in the margin there.
+(defun my/diff-hl-use-margin-on-tty ()
+  (when (and diff-hl-mode (not (display-graphic-p)))
+    (diff-hl-margin-local-mode 1)))
 
 ;; -------------------------------------------------------------------
 ;;; Lisp Development
@@ -360,7 +429,11 @@
           ielm-mode
           lisp-mode
           lisp-interaction-mode)
-         . paredit-mode))
+         . paredit-mode)
+  :config
+  ;; paredit-RET shadows RET in the M-: minibuffer and ielm, so RET would
+  ;; insert a newline instead of evaluating.
+  (define-key paredit-mode-map (kbd "RET") nil))
 
 (use-package rainbow-delimiters
   :hook ((emacs-lisp-mode
@@ -406,10 +479,6 @@
 ;; -------------------------------------------------------------------
 ;;; Local Lisp
 ;; -------------------------------------------------------------------
-
-(add-to-list 'load-path
-             (expand-file-name "lisp"
-                               user-emacs-directory))
 
 (use-package rgbds-mode
   :load-path "lisp"
