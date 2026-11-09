@@ -150,3 +150,8 @@ swap_files() {
 }
 
 export VOLTA_FEATURE_PNPM=1
+
+# Vite+ bin (https://viteplus.dev)
+if [ -f "$HOME/.config/vite-plus/env" ]; then
+  . "$HOME/.config/vite-plus/env"
+fi
